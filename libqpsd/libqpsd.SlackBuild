@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libqpsd
 VERSION=2.2.1
@@ -79,16 +79,16 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-qmake PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile QPsdPlugin.pro
+qmake -j$NPROC PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile QPsdPlugin.pro
 
-make
-make INSTALL_ROOT=$PKG install
+make -j$NPROC
+make  INSTALL_ROOT=$PKG install
 
-make clean
+make -j$NPROC clean
 qmake-qt5 PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile QPsdPlugin.pro
 
-make
-make INSTALL_ROOT=$PKG install
+make -j$NPROC
+make  INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

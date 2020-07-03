@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libcli
 SRCVERSION=1.10.4
@@ -81,8 +81,8 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
 sed -i "s|\$(PREFIX)/lib|\$(PREFIX)/lib${LIBDIRSUFFIX}|g" Makefile
-make CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS" PREFIX="/usr"
-make CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS" PREFIX="/usr" DESTDIR=$PKG install
+make -j$NPROC CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS" PREFIX="/usr"
+make -j$NPROC CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS" PREFIX="/usr" DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

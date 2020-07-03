@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=rtmpdump
 COMMIT=fa8646d
@@ -92,8 +92,8 @@ sed -e 's/^CRYPTO=OPENSSL/#CRYPTO=OPENSSL/' -e 's/#CRYPTO=GNUTLS/CRYPTO=GNUTLS/'
 
 XLDFLAGS="-L/usr/lib$LIBDIRSUFFIX" \
 XCFLAGS="$SLKCFLAGS" \
-make prefix=/usr libdir=/usr/lib$LIBDIRSUFFIX
-make prefix=/usr libdir=/usr/lib$LIBDIRSUFFIX DESTDIR=$PKG install
+make -j$NPROC prefix=/usr libdir=/usr/lib$LIBDIRSUFFIX
+make -j$NPROC prefix=/usr libdir=/usr/lib$LIBDIRSUFFIX DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

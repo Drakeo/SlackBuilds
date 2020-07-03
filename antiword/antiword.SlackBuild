@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=antiword
 VERSION=0.37
@@ -79,7 +79,7 @@ fi
 # Fix prefix
  sed -i "s|GLOBAL_INSTALL_DIR =.*|GLOBAL_INSTALL_DIR = /usr/bin|g" Makefile.Linux
 
-make OPT="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
+make -j$NPROC OPT="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
 make DESTDIR=$PKG global_install
 
 # Don't ship .la files:

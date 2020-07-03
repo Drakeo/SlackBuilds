@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=openjpeg
 PKGNAM=openjpeg1
@@ -74,7 +74,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -87,7 +87,7 @@ cmake \
   -DOPENJPEG_INSTALL_DOC_DIR="doc/$PKGNAM-$VERSION/" \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

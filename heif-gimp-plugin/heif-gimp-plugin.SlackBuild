@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=heif-gimp-plugin
 COMMIT=d6bea529e5b21749e72da743673377640139e69a
@@ -104,7 +104,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

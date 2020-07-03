@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libdbi
 VERSION=0.9.0
@@ -82,8 +82,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make docdir=/usr/doc/$PKGNAM-$VERSION 
-make docdir=/usr/doc/$PKGNAM-$VERSION DESTDIR=$PKG install-strip
+make -j$NPROC docdir=/usr/doc/$PKGNAM-$VERSION 
+make -j$NPROC docdir=/usr/doc/$PKGNAM-$VERSION DESTDIR=$PKG install-strip
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

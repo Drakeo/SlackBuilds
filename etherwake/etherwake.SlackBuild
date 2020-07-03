@@ -24,7 +24,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=etherwake
 VERSION=1.09
@@ -66,7 +66,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
+make -j$NPROC CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
 install -Dsm755 $PKGNAM $PKG/usr/sbin/$PKGNAM
 
 if [ -e $PKGNAM.8 ]; then

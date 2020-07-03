@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=smplayer-skins
 VERSION=15.2.0
@@ -50,7 +50,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make PREFIX=/usr
+make -j$NPROC PREFIX=/usr
 make DESTDIR=$PKG PREFIX=/usr install
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

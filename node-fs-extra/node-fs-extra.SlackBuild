@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=node-fs-extra
 VERSION=7.0.1

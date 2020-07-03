@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=unibilium
 SRCVERSION=92d929fabaf94ea4feb48149bbc3bbea77c4fab0
@@ -80,7 +80,7 @@ cd $PKGNAM-$SRCVERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make PREFIX=/usr CFLAGS="$SLKCFLAGS"
+make -j$NPROC PREFIX=/usr CFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG PREFIX=/usr LIBDIR=/usr/lib${LIBDIRSUFFIX} MANDIR=/usr/man CFLAGS="$SLKCFLAGS" install
 
 # Don't ship .la files:

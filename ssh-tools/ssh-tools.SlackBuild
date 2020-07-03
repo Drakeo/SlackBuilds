@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ssh-tools
 VERSION=1.6
@@ -60,7 +60,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 install -Dm755 ssh-* -t $PKG/usr/bin/
 
-# make man pages
+# make -j$NPROC man pages
 mkdir -p $PKG/usr/man/man1/
 for SSHTOOL in ssh-certinfo ssh-diff ssh-facts ssh-hostkeys ssh-keyinfo ssh-ping ssh-version; do
 	help2man -s 1 -N --version-string=$VERSION ./$SSHTOOL | gzip -9 > $PKG/usr/man/man1/$SSHTOOL.1.gz

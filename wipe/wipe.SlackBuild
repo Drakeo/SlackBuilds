@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=wipe
 VERSION=2.3.1
@@ -79,7 +79,7 @@ chmod -R u+w,go+r-w,a-s .
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
 
 install -Dsm755 wipe $PKG/usr/bin/wipe
 

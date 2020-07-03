@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=oneTBB
 PKGNAM=tbb
@@ -88,7 +88,7 @@ fi
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-make
+make -j$NPROC
 
 mkdir -p $PKG/usr/{lib${LIBDIRSUFFIX},include}
 cp -a build/linux_*_release/*.so.* $PKG/usr/lib${LIBDIRSUFFIX}
@@ -97,11 +97,11 @@ ln -s libtbbmalloc.so.2 $PKG/usr/lib${LIBDIRSUFFIX}/libtbbmalloc.so
 ln -s libtbbmalloc_proxy.so.2 $PKG/usr/lib${LIBDIRSUFFIX}/libtbbmalloc_proxy.so
 cp -a include/tbb $PKG/usr/include/
 
-cmake \
-    -DINSTALL_DIR=$PKG/usr/lib${LIBDIRSUFFIX}/cmake/TBB \
+cmake -j$NPROC \
+    -DINSTALL_DIR=$PKG/usr/lib${LIBDIRSUFFIX}/cmake -j$NPROC/TBB \
     -DSYSTEM_NAME=Linux \
     -TBB_VERSION_FILE=$PKG/usr/include/tbb/tbb_stddef.h \
-    -P cmake/tbb_config_installer.cmake
+    -P cmake -j$NPROC/tbb_config_installer.cmake -j$NPROC
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

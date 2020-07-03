@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=sitemap-generator
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)

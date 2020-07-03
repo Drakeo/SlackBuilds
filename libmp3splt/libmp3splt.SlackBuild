@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libmp3splt
 VERSION=0.9.2
@@ -89,7 +89,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux
 
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

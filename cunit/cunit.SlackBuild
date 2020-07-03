@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=CUnit
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
@@ -76,7 +76,7 @@ chmod -R u+w,go+r-w,a+X-s .
 libtoolize --force --copy
 aclocal
 autoheader
-automake --add-missing --include-deps --copy
+automake -j$NPROC --add-missing --include-deps --copy
 autoconf
 
 LDFLAGS="-L/usr/lib$LIBDIRSUFFIX" \
@@ -95,7 +95,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

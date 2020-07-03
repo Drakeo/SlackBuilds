@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=MP3Diags
 PKGNAM=mp3diags
@@ -79,9 +79,9 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 ./AdjustMt.sh
-qmake PREFIX=/usr QMAKE_CFLAGS="$SLKCFLAGS" QMAKE_CXXFLAGS="$SLKCFLAGS" -o Makefile $PKGNAM.pro
+qmake -j$NPROC PREFIX=/usr QMAKE_CFLAGS="$SLKCFLAGS" QMAKE_CXXFLAGS="$SLKCFLAGS" -o Makefile $PKGNAM.pro
 
-make
+make -j$NPROC
 install -Dpm 755 bin/MP3Diags $PKG/usr/bin/MP3Diags
 strip $PKG/usr/bin/MP3Diags
 

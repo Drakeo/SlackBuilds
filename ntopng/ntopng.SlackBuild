@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ntopng
 COMMIT=c8db38a06c7d924efc7fa836987d2c4aebec2fc9
@@ -97,8 +97,8 @@ CXXFLAGS="$SLKCFLAGS -fpermissive" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
-make geoip
+make -j$NPROC
+make -j$NPROC geoip
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

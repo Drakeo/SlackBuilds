@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hiredis
 VERSION=0.14.1
@@ -79,7 +79,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make OPTIMIZATION="" DEBUG="" CFLAGS="$SLKCFLAGS" LIBRARY_PATH=lib${LIBDIRSUFFIX}
+make -j$NPROC OPTIMIZATION="" DEBUG="" CFLAGS="$SLKCFLAGS" LIBRARY_PATH=lib${LIBDIRSUFFIX}
 make DESTDIR=$PKG PREFIX=/usr LIBRARY_PATH=lib${LIBDIRSUFFIX} install
 
 # Don't ship .la files:

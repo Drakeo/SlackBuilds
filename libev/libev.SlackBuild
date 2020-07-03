@@ -29,7 +29,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libev
 VERSION=4.24
@@ -89,7 +89,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

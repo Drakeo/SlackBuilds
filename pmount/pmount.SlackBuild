@@ -30,7 +30,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=pmount
 VERSION=0.9.23
@@ -88,8 +88,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-hal \
   --build=$ARCH-slackware-linux
 
-make 
-make install-strip DESTDIR=$PKG
+make -j$NPROC 
+make -j$NPROC install-strip DESTDIR=$PKG
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

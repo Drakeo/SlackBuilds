@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=http-parser
 VERSION=2.9.4
@@ -84,7 +84,7 @@ sed -e 's/-O3//' \
     -e 's/-D  http_parser\.h/-Dm644 http_parser.h/' \
     -i Makefile
 
-make CFLAGS="$SLKCFLAGS" \
+make -j$NPROC CFLAGS="$SLKCFLAGS" \
      PREFIX=/usr \
      LIBDIR=/usr/lib${LIBDIRSUFFIX} \
      DESTDIR=$PKG \

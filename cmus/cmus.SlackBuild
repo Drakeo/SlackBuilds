@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=cmus
 SRCVERSION=2.8.0
@@ -88,7 +88,7 @@ CXXFLAGS="$SLKCFLAGS" \
   exampledir="/usr/doc/$PKGNAM-$VERSION/examples" \
   DEBUG=0
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

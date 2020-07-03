@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=k9copy
 VERSION=3.0.3
@@ -78,7 +78,7 @@ fi
 
 mkdir build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=Release \
@@ -89,7 +89,7 @@ cmake -Wno-dev \
   -DLIB_SUFFIX=${LIBDIRSUFFIX} \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

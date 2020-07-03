@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=jack2
 PKGNAM=jack
@@ -89,7 +89,7 @@ fi
 
 # Minor source of incompatibility between jack 1.x and 2.x: some jack
 # apps don't add -lpthread to their CFLAGS because they assume jack.pc
-# will already include it (it does, in 1.x). So make 2 act like 1.
+# will already include it (it does, in 1.x). So make -j$NPROC 2 act like 1.
 # (Thanks to SBo)
 sed -i '/^Libs:/s/$/ -lpthread/' jack.pc.in
 

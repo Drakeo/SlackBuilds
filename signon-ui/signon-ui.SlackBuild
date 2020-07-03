@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=signon-ui
 COMMIT=4368bb77d9d1abc2978af514225ba4a42c29a646
@@ -98,8 +98,8 @@ qmake-qt5 PREFIX=/usr \
           LIBDIR=/usr/lib$LIBDIRSUFFIX \
           -o Makefile $PKGNAM.pro
 
-make
-make INSTALL_ROOT=$PKG install
+make -j$NPROC
+make  INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

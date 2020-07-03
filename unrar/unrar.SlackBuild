@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=unrar
 VERSION=5.9.3
@@ -77,7 +77,7 @@ cd $PKGNAM
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make -f makefile unrar lib CXXFLAGS="$SLKCFLAGS" STRIP="true"
+make -j$NPROC -f make -j$NPROCfile unrar lib CXXFLAGS="$SLKCFLAGS" STRIP="true"
 install -Dsm755 libunrar.so $PKG/usr/lib${LIBDIRSUFFIX}/libunrar.so
 install -Dsm755 unrar $PKG/usr/bin/unrar
 mkdir -p $PKG/usr/include/unrar

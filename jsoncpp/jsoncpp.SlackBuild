@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=jsoncpp
 VERSION=1.9.3
@@ -81,7 +81,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
   -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \
@@ -95,7 +95,7 @@ cmake -Wno-dev \
   -DCMAKE_INSTALL_INCLUDEDIR="/usr/include/$PKGNAM" \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

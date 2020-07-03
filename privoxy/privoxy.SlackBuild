@@ -26,7 +26,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=privoxy
 VERSION=3.0.26
@@ -82,12 +82,12 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
 # Put the docs where we tell them to go.
-sed '/^DOC_DEST/s/= .*/= @docdir@/' -i GNUmakefile.in
+sed '/^DOC_DEST/s/= .*/= @docdir@/' -i GNUmake -j$NPROCfile.in
 
 # The Makefile checks if certain config files exist, and if so, adds a
 # .new suffix.  Turn this behavior off.  We will do it below.
 # Thanks to SBo
-sed 's|\[ -s "\$(CONF_DEST)/\$\$i" \]|false|' -i GNUmakefile.in
+sed 's|\[ -s "\$(CONF_DEST)/\$\$i" \]|false|' -i GNUmake -j$NPROCfile.in
 
 autoreconf
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
@@ -110,7 +110,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install-strip
 
 # Don't ship .la files:

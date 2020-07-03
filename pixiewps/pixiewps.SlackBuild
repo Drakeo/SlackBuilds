@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=pixiewps
 VERSION=1.4.2
@@ -71,8 +71,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make PREFIX=/usr OPENSSL=1 CCFLAGS="$SLKCFLAGS"
-make PREFIX=/usr MANDIR=/usr/man DESTDIR=$PKG install
+make -j$NPROC PREFIX=/usr OPENSSL=1 CCFLAGS="$SLKCFLAGS"
+make -j$NPROC PREFIX=/usr MANDIR=/usr/man DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

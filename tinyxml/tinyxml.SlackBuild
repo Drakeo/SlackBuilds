@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=tinyxml
 SRCVERSION=${VERSION:-2_6_2}
@@ -83,7 +83,7 @@ fi
 sed -e '/^TINYXML_USE_STL/ s/=.*/=YES/' \
     -e "s/^RELEASE_CFLAGS.*/& $SLKCFLAGS -fPIC/" -i Makefile
 
-make
+make -j$NPROC
 g++ -fPIC -v $SLKCFLAGS -Wall -Wno-unknown-pragmas -Wno-format -shared -o \
   lib${PKGNAM}.so.0.$VERSION -Wl,-soname,lib${PKGNAM}.so.0 *.o
 

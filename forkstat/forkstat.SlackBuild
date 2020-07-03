@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=forkstat
 VERSION=0.01.18
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-CFLAGS="$SLKCFLAGS" make
+CFLAGS="$SLKCFLAGS" make -j$NPROC
 make DESTDIR=$PKG MANDIR=/usr/man/man8 install
 
 # Don't ship .la files:

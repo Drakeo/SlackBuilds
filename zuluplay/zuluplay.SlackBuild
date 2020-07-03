@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=zuluplay
 VERSION=1.1
@@ -76,14 +76,14 @@ sed 's|share/man|man|g' -i CMakeLists.txt
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DLOCALSTATEDIR=/var \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

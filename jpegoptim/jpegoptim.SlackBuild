@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=jpegoptim
 VERSION=1.4.6
@@ -85,8 +85,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
-make strip
+make -j$NPROC
+make -j$NPROC strip
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=instant-markdown
 SRCVERSION=0a297fdeed49cfdfd292f6389a4e3ea3c4af0793

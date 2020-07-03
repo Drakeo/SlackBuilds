@@ -24,7 +24,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ettercap
 VERSION=0.8.3
@@ -89,7 +89,7 @@ sed "s/\(CMAKE_C_FLAGS_RELEASE \".*2\)\"/\1 ${SLKCFLAGS}\"/" -i CMakeLists.txt
 mkdir -p build build6
 
 cd build
-cmake \
+cmake -j$NPROC \
  -DCMAKE_C_FLAGS="$SLKCFLAGS" \
  -DCMAKE_BUILD_TYPE=Release \
  -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \
@@ -101,7 +101,7 @@ cmake \
  -DDISABLE_RPATH=ON \
  ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

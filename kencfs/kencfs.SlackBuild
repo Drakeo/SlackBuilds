@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=kencfs
 VERSION=1.6.4
@@ -72,10 +72,10 @@ chmod -R u+w,go+r-w,a-s .
 # Fix doc path
 sed "s|/usr/share/doc/.*|/usr/doc/$PKGNAM-${VERSION}|" -i kencfs.pro
 
-qmake PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile ${PKGNAM}.pro
+qmake -j$NPROC PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile ${PKGNAM}.pro
 
-make
-make INSTALL_ROOT=$PKG install
+make -j$NPROC
+make  INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

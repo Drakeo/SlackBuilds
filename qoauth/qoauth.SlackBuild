@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=qoauth
 VERSION=2.0.0
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-qmake -unix PREFIX=/usr \
+qmake -j$NPROC -unix PREFIX=/usr \
     DOCDIR=/usr/doc/$PKGNAM-$VERSION \
     QMAKE_LIBS="-L/usr/lib${LIBDIRSUFFIX}" \
     QMAKE_CFLAGS="" \
@@ -80,8 +80,8 @@ qmake -unix PREFIX=/usr \
     QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" \
     -o Makefile ${PKGNAM}.pro
 
-make
-make INSTALL_ROOT=$PKG install
+make -j$NPROC
+make  INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

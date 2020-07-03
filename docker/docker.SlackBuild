@@ -30,7 +30,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=docker-ce
 PKGNAM=docker
@@ -107,7 +107,7 @@ cd components/engine
   DOCKER_BUILDTAGS="seccomp" \
   VERSION=$(cat ../../VERSION) \
   GOPATH=$TMP/$PRGNAM-$VERSION/build \
-  ./hack/make.sh dynbinary
+  ./hack/make -j$NPROC.sh dynbinary
 
   install -Dm755 $(readlink -f bundles/dynbinary-daemon/dockerd) \
     $PKG/usr/bin/dockerd
@@ -116,7 +116,7 @@ cd -
 # Build CLI.
 cd components/cli
 DISABLE_WARN_OUTSIDE_CONTAINER=1 \
-make dynbinary \
+make -j$NPROC dynbinary \
   GITCOMMIT=$COMMIT \
   VERSION=$(cat ../../VERSION) \
   GOPATH=$TMP/$PRGNAM-$VERSION/build

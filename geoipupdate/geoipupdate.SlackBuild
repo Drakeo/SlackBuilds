@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=geoipupdate
 VERSION=4.3.0
@@ -93,7 +93,7 @@ sed 's/EditionIDs .*/EditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country/' -i
 
 CONFFILE=/etc/GeoIP.conf \
 DATADIR=/usr/share/GeoIP \
-make
+make -j$NPROC
 
 install -Dm755 build/$PKGNAM $PKG/usr/bin/$PKGNAM
 install -Dm644 build/GeoIP.conf $PKG/etc/GeoIP.conf.new

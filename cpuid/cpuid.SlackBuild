@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=cpuid
 VERSION=20170122
@@ -74,8 +74,8 @@ chmod -R u+w,go+r-w,a+X-s .
 # Fix man path
 sed 's|share/man|man|g' -i Makefile
 
-make CFLAGS="$SLKCFLAGS"
-make BUILDROOT=$PKG install
+make -j$NPROC CFLAGS="$SLKCFLAGS"
+make -j$NPROC BUILDROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

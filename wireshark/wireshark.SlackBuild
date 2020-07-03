@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=wireshark
 VERSION=3.2.5
@@ -86,7 +86,7 @@ fi
 
 mkdir -p build
 cd build
-cmake -Wno-dev -GNinja \
+cmake -j$NPROC -Wno-dev -GNinja \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -lm -ldl" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -lm -ldl" \
   -DCMAKE_BUILD_TYPE=Release \

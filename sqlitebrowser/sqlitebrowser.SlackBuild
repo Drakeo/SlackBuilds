@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=sqlitebrowser
 VERSION=3.12.0
@@ -84,14 +84,14 @@ sed 's/DB Browser for SQLite/sqlitebrowser/g' -i CMakeLists.txt
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=sslh
 VERSION=1.20
@@ -74,7 +74,7 @@ chmod -R u+w,go+r-w,a-s .
 # Fix slackware path in manpage
 sed 's|/init.d/sslh|/rc.d/rc.sslh|' -i sslh.pod
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
 install -Dsm755 sslh-fork $PKG/usr/sbin/sslh-fork
 install -Dsm755 sslh-select $PKG/usr/sbin/sslh-select
 ln -s sslh-fork $PKG/usr/sbin/sslh

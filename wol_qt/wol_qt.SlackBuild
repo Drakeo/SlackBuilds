@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=wol_qt
 VERSION=2.4
@@ -96,14 +96,14 @@ fi
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=chkrootkit
 VERSION=0.53
@@ -78,9 +78,9 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
 
-make CFLAGS="$SLKCFLAGS -DHAVE_LASTLOG_H"
+make -j$NPROC CFLAGS="$SLKCFLAGS -DHAVE_LASTLOG_H"
 
-# Lets make our own fancy make install. Thanks to Michiel van Wessem
+# Lets make -j$NPROC our own fancy make -j$NPROC install. Thanks to Michiel van Wessem
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

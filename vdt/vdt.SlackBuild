@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=vdt
 VERSION=5.4.68
@@ -74,7 +74,7 @@ chmod -R u+w,go+r-w,a-s .
 ./configure
 sed "s|^\(GNUFLG.*\)|\1 $SLKCFLAGS|" -i Makefile
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
 
 install -Dsm755 vdt $PKG/usr/bin/vdt
 install -Dm644 vdt.1 $PKG/usr/man/man1/vdt.1

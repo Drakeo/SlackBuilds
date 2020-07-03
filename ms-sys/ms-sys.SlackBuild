@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ms-sys
 VERSION=2.5.3
@@ -71,8 +71,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make PREFIX=/usr EXTRA_CFLAGS="$SLKCFLAGS"
-make PREFIX=/usr DESTDIR=$PKG install
+make -j$NPROC PREFIX=/usr EXTRA_CFLAGS="$SLKCFLAGS"
+make -j$NPROC PREFIX=/usr DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

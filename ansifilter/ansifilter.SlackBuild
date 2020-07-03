@@ -38,7 +38,7 @@ if [ -z ${ARCH:=""} ]; then
   esac
 fi
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
@@ -80,9 +80,9 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 
-make EXTRA_CXXFLAGS="$SLKCFLAGS"
+make -j$NPROC EXTRA_CXXFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG man_dir=/usr/man/man1 doc_dir=/usr/doc/$PRGNAM-$VERSION install
-make QMAKE=qmake-qt5 EXTRA_CXXFLAGS="$SLKCFLAGS" gui
+make QMAKE=qmake-qt5  EXTRA_CXXFLAGS="$SLKCFLAGS" gui
 make DESTDIR=$PKG install-gui
 
 # Don't ship .la files:

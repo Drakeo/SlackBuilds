@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=txt2man
 VERSION=1.7.1
@@ -57,7 +57,7 @@ cd $PKGNAM-$PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make
+make -j$NPROC
 install -Dm755 *man -t $PKG/usr/bin/
 install -Dm644 *man.1 -t $PKG/usr/man/man1/
 

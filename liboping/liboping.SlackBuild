@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=liboping
 VERSION=1.10.0
@@ -92,7 +92,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 sed -i 's|/share/man/|/man/|g' bindings/perl/Makefile
 make DESTDIR=$PKG install-strip
 

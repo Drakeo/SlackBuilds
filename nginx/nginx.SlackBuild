@@ -29,7 +29,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=nginx
 VERSION=1.19.0
@@ -145,7 +145,7 @@ sed -e '/root[ ]*html/s|html;|/var/www/&|' \
   --with-stream=dynamic \
   --with-threads
 
-make
+make -j$NPROC
 make DESTDIR=$PKG INSTALLDIRS=vendor INSTALLVENDORMAN3DIR=/usr/man/man3 install
 
 # Don't ship .la files:

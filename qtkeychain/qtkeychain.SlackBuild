@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=qtkeychain
 VERSION=0.10.0
@@ -81,14 +81,14 @@ chmod -R u+w,go+r-w,a-s .
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

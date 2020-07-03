@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=containerd
 VERSION=1.3.6
@@ -102,7 +102,7 @@ export PATH="${GOROOT}/bin:${PATH}"
 export GOFLAGS="-trimpath"
 export GOPATH=$TMP/$PKGNAM-$VERSION/build
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

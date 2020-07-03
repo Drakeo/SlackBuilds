@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hwinfo
 VERSION=21.67
@@ -98,7 +98,7 @@ sed '/^TARGETS/s/changelog//' -i Makefile
 # use our CFLAGS
 sed -i "s/?= -O2/?= $SLKCFLAGS/" Makefile.common
 
-make LIBDIR=/usr/lib${LIBDIRSUFFIX}
+make -j$NPROC LIBDIR=/usr/lib${LIBDIRSUFFIX}
 make DESTDIR=$PKG LIBDIR=/usr/lib${LIBDIRSUFFIX} install
 
 # Don't ship .la files:

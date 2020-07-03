@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=libtorrent
 VERSION=${VERSION:-0.13.6}
@@ -100,7 +100,7 @@ CXXFLAGS="$SLKCFLAGS -fno-strict-aliasing" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j1
+make -j$NPROC -j1
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

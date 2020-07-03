@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=inkscape
 VERSION=0.92.5
@@ -85,18 +85,18 @@ if [ -e $CWD/patches/ ]; then
 fi
 
 # Fix man path
-sed 's|\${SHARE_INSTALL}/man/man|man/man|g' -i CMakeScripts/Pod2man.cmake
+sed 's|\${SHARE_INSTALL}/man/man|man/man|g' -i CMakeScripts/Pod2man.cmake -j$NPROC
 
 # Fix lib path
-sed "/INKSCAPE_LIBDIR/s/lib/lib$LIBDIRSUFFIX/g" -i CMakeScripts/ConfigPaths.cmake
+sed "/INKSCAPE_LIBDIR/s/lib/lib$LIBDIRSUFFIX/g" -i CMakeScripts/ConfigPaths.cmake -j$NPROC
 sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" \
     -e "/LIBRARY_OUTPUT_PATH/s|/lib|/lib$LIBDIRSUFFIX|" \
     -i CMakeLists.txt
-sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" -i src/CMakeLists.txt -i CMakeScripts/HelperMacros.cmake
+sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" -i src/CMakeLists.txt -i CMakeScripts/HelperMacros.cmake -j$NPROC
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -fopenmp -pthread -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -fopenmp -pthread -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \
@@ -109,7 +109,7 @@ cmake -Wno-dev \
   -DCMAKE_WITH_NLS=ON \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

@@ -25,7 +25,7 @@
 
 set -e 
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ike-scan
 VERSION=1.9.4
@@ -84,7 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install-strip
 
 # Don't ship .la files:

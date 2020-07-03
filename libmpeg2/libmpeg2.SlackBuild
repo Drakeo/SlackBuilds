@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libmpeg2
 VERSION=0.5.1
@@ -84,7 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make OPT_CFLAGS="$SLKCFLAGS" MPEG2DEC_CFLAGS="$SLKCFLAGS" LIBMPEG2_CFLAGS=""
+make -j$NPROC OPT_CFLAGS="$SLKCFLAGS" MPEG2DEC_CFLAGS="$SLKCFLAGS" LIBMPEG2_CFLAGS=""
 
 make DESTDIR=$PKG install-strip
 

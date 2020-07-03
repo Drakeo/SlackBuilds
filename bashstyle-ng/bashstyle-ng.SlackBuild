@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bashstyle-ng
 VERSION=10.7.1
@@ -81,8 +81,8 @@ chmod -R u+w,go+r-w,a+X-s .
 
 ./configure --no-postinstall
 
-./make build
-DESTDIR=$PKG ./make install
+./make -j$NPROC build
+DESTDIR=$PKG ./make -j$NPROC install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

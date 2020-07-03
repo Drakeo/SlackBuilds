@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=gif2png
 VERSION=3.0.0
@@ -82,8 +82,8 @@ chmod -R u+w,go+r-w,a+X-s .
 export GOROOT="/usr/lib${LIBDIRSUFFIX}/go"
 export PATH="${GOROOT}/bin:${PATH}"
 
-make
-make DESTDIR="$PKG" mandir="/usr/man" install
+make -j$NPROC
+make -j$NPROC DESTDIR="$PKG" mandir="/usr/man" install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

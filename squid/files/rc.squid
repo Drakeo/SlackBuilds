@@ -1,6 +1,6 @@
 #!/bin/sh
 # Start/stop/restart/reload the Squid Internet Object Cache (squid)
-# To make Squid start automatically at boot, make this
+# To make -j$NPROC Squid start automatically at boot, make -j$NPROC this
 # file executable:  chmod 755 /etc/rc.d/rc.Squid
 #
 # Written for Slackware Linux by Erik Jan Tromp

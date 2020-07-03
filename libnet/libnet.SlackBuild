@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libnet
 VERSION=1.1.6
@@ -83,8 +83,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make 
-make install-strip DESTDIR=$PKG
+make -j$NPROC 
+make -j$NPROC install-strip DESTDIR=$PKG
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=masscan
 VERSION=1.0.5
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make CFLAGS="$SLKCFLAGS -Wall"
+make -j$NPROC CFLAGS="$SLKCFLAGS -Wall"
 install -Dsm755 bin/masscan $PKG/usr/bin/masscan
 install -Dm644 data/exclude.conf $PKG/etc/masscan/exclude.conf
 install -Dm644 doc/masscan.8 $PKG/usr/man/man8/masscan.8

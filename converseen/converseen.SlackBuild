@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=converseen
 VERSION=0.9.8.1
@@ -77,7 +77,7 @@ chmod -R u+w,go+r-w,a-s .
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
@@ -85,7 +85,7 @@ cmake \
   -DLIB_SUFFIX=${LIBDIRSUFFIX} \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

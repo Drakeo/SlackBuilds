@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=scribus
 VERSION=1.5.5
@@ -86,7 +86,7 @@ sed -e "s|CMAKE_INSTALL_DATAROOTDIR}/man/|CMAKE_INSTALL_PREFIX}/man/|g" \
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
@@ -98,7 +98,7 @@ cmake \
   -Wno-dev \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install/strip
 cd ..
 

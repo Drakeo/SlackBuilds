@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=p7zip
 VERSION=16.02
@@ -75,25 +75,25 @@ if [ -e $CWD/patches/ ]; then
 fi
 
 if [ $ARCH == "x86_64" ]; then
-  cp -f makefile.linux_amd64_asm makefile.machine
+  cp -f make -j$NPROCfile.linux_amd64_asm make -j$NPROCfile.machine
 else
-  cp -f makefile.linux_x86_asm_gcc_4.X makefile.machine
+  cp -f make -j$NPROCfile.linux_x86_asm_gcc_4.X make -j$NPROCfile.machine
 fi
 
 sed \
   -e '/Rar/d' \
   -e '/RAR/d' \
-  -i makefile* CPP/7zip/Bundles/Format7zFree/makefile
+  -i make -j$NPROCfile* CPP/7zip/Bundles/Format7zFree/make -j$NPROCfile
 rm -rf CPP/7zip/Compress/Rar
 
 sed -e 's|cp -r DOC|cp -r DOC/*|g' -e 's|${DEST_SHARE_DOC}/DOC|${DEST_SHARE_DOC}|g' -i install.sh
-make all5 OPTFLAGS="$SLKCFLAGS" \
+make -j$NPROC all5 OPTFLAGS="$SLKCFLAGS" \
   DEST_HOME=/usr \
   DEST_SHARE_DOC=/usr/doc/$PKGNAM-$VERSION \
   DEST_MAN=/usr/man \
   DEST_SHARE=/usr/lib${LIBDIRSUFFIX}/p7zip
 
-make install \
+make -j$NPROC install \
   DEST_HOME=/usr \
   DEST_SHARE_DOC=/usr/doc/$PKGNAM-$VERSION \
   DEST_MAN=/usr/man \

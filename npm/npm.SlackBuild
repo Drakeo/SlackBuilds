@@ -28,7 +28,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=cli
 PKGNAM=npm

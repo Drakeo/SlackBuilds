@@ -26,7 +26,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=qemu
 SRCVERSION=5.0.0
@@ -145,8 +145,8 @@ ARFLAGS="rv" \
   --audio-drv-list="alsa,sdl,pa" \
   --target-list="x86_64-softmmu,x86_64-linux-user"
 
-make config-all-devices.mak config-all-disas.mak
-make V=1
+make -j$NPROC config-all-devices.mak config-all-disas.mak
+make -j$NPROC V=1
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

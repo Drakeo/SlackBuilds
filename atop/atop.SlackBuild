@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=atop
 SRCVERSION=2.5.0
@@ -92,7 +92,7 @@ sed -e 's|exit 0|exit 1|' \
     -e 's|/usr/share/atop/atop.daily\&|/etc/cron.daily/atop \&|g' \
     -i atop.init
 
-make CFLAGS="$SLKCFLAGS"
+make -j$NPROC CFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG sysvinstall
 
 # Don't ship .la files:

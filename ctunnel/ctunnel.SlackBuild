@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ctunnel
 VERSION=0.7
@@ -77,7 +77,7 @@ sed -e '/^CFLAGS/s/-g//' -i src/Makefile
 # Use ssl 1.0
 sed -e "s|-lcrypto|-lcrypto -L/usr/lib${LIBDIRSUFFIX}/openssl-1.0|" -i src/Makefile
 
-make OPTS="-I/usr/include/openssl-1.0"
+make -j$NPROC OPTS="-I/usr/include/openssl-1.0"
 install -Dsm755 src/ctunnel $PKG/usr/bin/ctunnel
 install -Dm644 ctunnel.1 $PKG/usr/man/man1/ctunnel.1
 gzip -9 $PKG/usr/man/man1/ctunnel.1

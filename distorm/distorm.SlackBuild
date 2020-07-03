@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=distorm
 VERSION=3.5
@@ -80,10 +80,10 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 # Fix lib path
-sed "s|/lib/|/lib$LIBDIRSUFFIX/|g" -i make/linux/Makefile
+sed "s|/lib/|/lib$LIBDIRSUFFIX/|g" -i make -j$NPROC/linux/Makefile
 
-CFLAGS="$SLKCFLAGS" make -C make/linux
-make DESTDIR="$PKG" PREFIX=/usr  -C make/linux install
+CFLAGS="$SLKCFLAGS" make -j$NPROC -C make -j$NPROC/linux
+make -j$NPROC DESTDIR="$PKG" PREFIX=/usr  -C make -j$NPROC/linux install
 python3 setup.py install --root=$PKG
 
 # Install header files

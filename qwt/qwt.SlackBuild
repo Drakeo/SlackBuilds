@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=qwt
 VERSION=6.1.3
@@ -79,10 +79,10 @@ if [ -e $CWD/patches ]; then
 fi
 
 sed -e "s%@LIBDIRSUFFIX@%${LIBDIRSUFFIX}%" -e "s%@QT4DIR@%$QT4DIR%" -e "s%@DOCVERSION@%${VERSION}%" -i qwtconfig.pri
-qmake PREFIX=/usr INSTALLBASE=/usr CONFIG+=QwtExamples
+qmake -j$NPROC PREFIX=/usr INSTALLBASE=/usr CONFIG+=QwtExamples
 
-make CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS"
-make install INSTALL_ROOT=$PKG
+make -j$NPROC CFLAGS+="$SLKCFLAGS" CXXFLAGS+="$SLKCFLAGS"
+make -j$NPROC install INSTALL_ROOT=$PKG
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

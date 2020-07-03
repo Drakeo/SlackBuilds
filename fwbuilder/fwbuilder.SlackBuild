@@ -29,7 +29,7 @@ SRCVERSION=6.0.0-beta
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
 OUTPUT=${OUTPUT:-/tmp}
@@ -67,12 +67,12 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 # Fix man path
-sed -e 's|share/man|man|g' -i configure.in -i qmake.inc.in
+sed -e 's|share/man|man|g' -i configure.in -i qmake -j$NPROC.inc.in
 
 # Disable DEBUG
 sed -e 's/^\(CONFIG += debug\)/#\1/' \
     -e 's/^# \(CONFIG += release\)/\1/' \
-    -i qmake.inc.in
+    -i qmake -j$NPROC.inc.in
 
 NOCONFIGURE=1 ./autogen.sh
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
@@ -88,8 +88,8 @@ CXXFLAGS="$SLKCFLAGS -Wno-error" \
   --disable-static \
   --build=$ARCH-slackware-linux
 
-make
-make install INSTALL_ROOT=$PKG
+make -j$NPROC
+make -j$NPROC install INSTALL_ROOT=$PKG
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

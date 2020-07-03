@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=VeraCrypt
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
@@ -90,15 +90,15 @@ if [ -e $CWD/patches ]; then
 fi
 
 cd src
-make \
+make -j$NPROC \
 TC_EXTRA_LDFLAGS+="-ldl -L/usr/lib$LIBDIRSUFFIX" \
 TC_EXTRA_CFLAGS="$SLKCFLAGS -maes" \
 TC_EXTRA_CXXFLAGS="$SLKCFLAGS -maes"
 
 install -Dsm755 Main/$PKGNAM $PKG/usr/bin/$PKGNAM
 
-make NOGUI=1 clean
-make NOGUI=1 NOTEST=1  \
+make -j$NPROC NOGUI=1 clean
+make -j$NPROC NOGUI=1 NOTEST=1  \
 TC_EXTRA_LDFLAGS+="-ldl -L/usr/lib$LIBDIRSUFFIX" \
 TC_EXTRA_CFLAGS="$SLKCFLAGS -maes" \
 TC_EXTRA_CXXFLAGS="$SLKCFLAGS -maes"

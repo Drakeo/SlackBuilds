@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=pngcrush
 VERSION=1.8.13
@@ -73,7 +73,7 @@ chmod -R u+w,go+r-w,a+X-s .
 # https://sourceforge.net/p/pmt/bugs/75/ (Thanks to SBo)
 sed -i '/typedef long ptrdiff_t;/s,long,__PTRDIFF_TYPE__,' zutil.h
 
-make CFLAGS="$SLKCFLAGS"
+make -j$NPROC CFLAGS="$SLKCFLAGS"
 install -Dsm755 pngcrush $PKG/usr/bin/pngcrush
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

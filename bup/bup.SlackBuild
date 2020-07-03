@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bup
 VERSION=0.30
@@ -88,7 +88,7 @@ fi
 
 ./configure
 
-make CFLAGS="$SLKCFLAGS" \
+make -j$NPROC CFLAGS="$SLKCFLAGS" \
      CXXFLAGS="$SLKCFLAGS" \
      PREFIX="/usr" \
      DOCDIR="/usr/doc/bup-$VERSION/html"

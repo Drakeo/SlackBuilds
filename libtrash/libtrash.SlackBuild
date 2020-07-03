@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libtrash
 VERSION=3.5
@@ -85,7 +85,7 @@ if [ -e $CWD/patches ]; then
   done
 fi
 
-make
+make -j$NPROC
 make DESTDIR=$PKG INSTLIBDIR=/usr/lib${LIBDIRSUFFIX} install
 
 # Don't ship .la files:

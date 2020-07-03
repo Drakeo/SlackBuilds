@@ -30,7 +30,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libvirt
 VERSION=6.1.0
@@ -113,8 +113,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make HTML_DIR=/usr/doc/$PKGNAM-$VERSION EXAMPLE_DIR=/usr/doc/$PKGNAM-$VERSION/examples
-make HTML_DIR=/usr/doc/$PKGNAM-$VERSION EXAMPLE_DIR=/usr/doc/$PKGNAM-$VERSION/examples DESTDIR=$PKG install
+make -j$NPROC HTML_DIR=/usr/doc/$PKGNAM-$VERSION EXAMPLE_DIR=/usr/doc/$PKGNAM-$VERSION/examples
+make -j$NPROC HTML_DIR=/usr/doc/$PKGNAM-$VERSION EXAMPLE_DIR=/usr/doc/$PKGNAM-$VERSION/examples DESTDIR=$PKG install
 
 cd ..
 

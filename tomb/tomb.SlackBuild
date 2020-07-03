@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=Tomb
 PKGNAM=tomb
@@ -72,7 +72,7 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make
+make -j$NPROC
 make DESTDIR=$PKG PREFIX=/usr MANDIR=/usr/man install
 
 # Don't ship .la files:
@@ -80,7 +80,7 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 cd extras/kdf-keys
 sed "s|-O2|$SLKCFLAGS|g" -i Makefile
-make
+make -j$NPROC
 make DESTDIR=$PKG PREFIX=/usr install
 
 # Don't ship .la files:

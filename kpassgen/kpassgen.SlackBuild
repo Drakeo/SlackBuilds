@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=kpassgen
 VERSION=1.4
@@ -73,7 +73,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG -DQT_NO_DEBUG" \
   -DCMAKE_BUILD_TYPE=none \
@@ -83,7 +83,7 @@ cmake -Wno-dev \
   -DLIB_SUFFIX=${LIBDIRSUFFIX} \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install/strip
 
 # Don't ship .la files:

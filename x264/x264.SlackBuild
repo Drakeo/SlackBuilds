@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=x264
 VERSION=20180720
@@ -96,7 +96,7 @@ for BIT in 8 10; do
   --enable-strip \
   --host=$ARCH-slackware-linux
 
-  make
+  make -j$NPROC
   make DESTDIR=$PKG install
   mv $PKG/usr/bin/x264{,-$BIT}
   mv $PKG/usr/lib$LIBDIRSUFFIX/libx264.so.${_ver} $PKG/usr/lib$LIBDIRSUFFIX/libx264-${BIT}.so.${_ver}

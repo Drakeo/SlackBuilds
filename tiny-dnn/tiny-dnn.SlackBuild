@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=tiny-dnn
 VERSION=1.0.0a3
@@ -52,7 +52,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DBUILD_TESTS=OFF \
@@ -60,7 +60,7 @@ cmake -Wno-dev \
   -DBUILD_DOCS=OFF \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

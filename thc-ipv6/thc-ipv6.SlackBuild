@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=thc-ipv6
 PKGNAM=$(echo $PKGNAM | tr A-Z a-z)
@@ -84,7 +84,7 @@ chmod -R u+w,go+r-w,a+X-s .
 # Use our CFLAGS
 sed 's|CFLAGS=|CFLAGS+=|g' -i Makefile
 
-CFLAGS+="$SLKCFLAGS" make PREFIX=/usr MANPREFIX=/usr/man
+CFLAGS+="$SLKCFLAGS" make -j$NPROC PREFIX=/usr MANPREFIX=/usr/man
 make DESTDIR=$PKG PREFIX=/usr MANPREFIX=/usr/man install
 
 # Don't ship .la files:

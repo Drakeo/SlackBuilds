@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=snort
 VERSION=2.9.11.1
@@ -101,7 +101,7 @@ CXXFLAGS="$SLKCFLAGS" \
  --host=$ARCH-slackware-linux \
  --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install-strip
 
 # Don't ship .la files:

@@ -24,7 +24,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bost
 VERSION=0.0.9
@@ -72,7 +72,7 @@ chmod -R u+w,go+r-w,a+X-s .
 # Use our flags
 sed "s/CFLAGS =/CFLAGS = $SLKCFLAGS/" -i Makefile
 
-make
+make -j$NPROC
 install -Dsm455 bost $PKG/usr/bin/bost
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

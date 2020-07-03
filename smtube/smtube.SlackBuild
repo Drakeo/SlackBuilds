@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=smtube
 VERSION=20.6.0
@@ -77,8 +77,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make QMAKE_OPTS="QMAKE_CFLAGS=\"$SLKCFLAGS\" QMAKE_CXXFLAGS=\"$SLKCFLAGS\"" PREFIX=/usr
-make PREFIX=/usr DOC_PATH=/usr/doc/$PKGNAM-$VERSION DESTDIR=$PKG install
+make -j$NPROC QMAKE_OPTS="QMAKE_CFLAGS=\"$SLKCFLAGS\" QMAKE_CXXFLAGS=\"$SLKCFLAGS\"" PREFIX=/usr
+make -j$NPROC PREFIX=/usr DOC_PATH=/usr/doc/$PKGNAM-$VERSION DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

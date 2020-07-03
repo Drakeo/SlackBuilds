@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=httraqt
 VERSION=1.4.9
@@ -76,7 +76,7 @@ sed 's|SET(USE_QT_VERSION 5)|SET(USE_QT_VERSION 4)|' -i CMakeLists.txt
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
@@ -86,7 +86,7 @@ cmake \
   -DUSE_QT_VERSION=4 \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 cd ..
 

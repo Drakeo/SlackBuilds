@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=scantailor
 VERSION=0.9.12.2
@@ -72,7 +72,7 @@ chmod -R u+w,go+r-w,a-s .
 
 mkdir -p build
 cd build
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG -fvisibility=hidden -ffunction-sections -fdata-sections " \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG -fvisibility=hidden -ffunction-sections -fdata-sections " \
   -DCMAKE_BUILD_TYPE=None \
@@ -80,7 +80,7 @@ cmake \
   -DENABLE_OPENGL=ON \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install/strip
 
 # Don't ship .la files:

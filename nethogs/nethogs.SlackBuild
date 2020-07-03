@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=nethogs
 VERSION=0.8.6
@@ -89,7 +89,7 @@ sed 's/$(LIB[^)]*ION)/0/g' -i src/MakeLib.mk
 # Fix script to determine version with tail
 sed 's/+2/+2 -/' -i determineVersion.sh
 
-make CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" PREFIX=/usr nethogs libnethogs
+make -j$NPROC CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" PREFIX=/usr nethogs libnethogs
 make DESTDIR=$PKG PREFIX=/usr install install_lib
 
 # Don't ship .la files:

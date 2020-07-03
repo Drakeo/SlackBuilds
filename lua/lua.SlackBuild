@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=lua
 SRCVERSION=5.4.0
@@ -90,13 +90,13 @@ if [ -e $CWD/patches/*.patch ]; then
   done
 fi
 
-make \
+make -j$NPROC \
 MYCFLAGS="$SLKCFLAGS -DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" \
 MYLDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
 MYLIBS="-ltermcap" \
 linux
 
-make \
+make -j$NPROC \
 TO_LIB="liblua.a liblua.so liblua.so.$MAINVERSION liblua.so.${VERSION}" \
 INSTALL_DATA="cp -d" \
 INSTALL_TOP="$PKG/usr" \

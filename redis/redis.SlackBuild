@@ -29,7 +29,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=redis
 VERSION=6.0.5
@@ -88,8 +88,8 @@ if [ -e $CWD/patches/ ]; then
   done
 fi
 
-make CFLAGS="$SLKCFLAGS"
-make PREFIX=$PKG/usr install
+make -j$NPROC CFLAGS="$SLKCFLAGS"
+make -j$NPROC PREFIX=$PKG/usr install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

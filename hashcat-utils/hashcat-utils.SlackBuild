@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hashcat-utils
 VERSION=1.9
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make CFLAGS="$SLKCFLAGS -Wall -W -std=c99" -C src
+make -j$NPROC CFLAGS="$SLKCFLAGS -Wall -W -std=c99" -C src
 
 for BIN in src/*.bin; do
   install -Dsm755 $BIN "$PKG/usr/bin/$(basename $BIN .bin)"

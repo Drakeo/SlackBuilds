@@ -41,7 +41,7 @@ fi
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=tor
 VERSION=0.4.3.5
@@ -109,13 +109,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install-strip
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
-# Create/install stuff that makes tor work (better). Thanks to SBo project
+# Create/install stuff that make -j$NPROCs tor work (better). Thanks to SBo project
 mkdir -p $PKG/var/{run,log,lib}/tor
 chown tor:tor $PKG/var/{run,log,lib}/tor
 chmod 0700 $PKG/var/lib/tor

@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=wget2
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
@@ -109,11 +109,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Remove wget2_noinstall
-# AFAICT wget2_noinstall is meant run `make check` before installing
+# AFAICT wget2_noinstall is meant run `make -j$NPROC check` before installing
 # wget2 itself. Normally, wget2 links to libwget, which is located
 # in /usr/lib and thus can't be resolved before wget2 is actually
 # installed.

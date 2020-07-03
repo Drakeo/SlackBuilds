@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=netcat-openbsd
 VERSION=1.217
@@ -84,7 +84,7 @@ if [ -e $CWD/patches/series ]; then
   done
 fi
 
-make CFLAGS="$SLKCFLAGS -DDEBIAN_VERSION=\"\\\"10\\\"\" -I/usr/include/libbsd" LDFLAGS="-lbsd"
+make -j$NPROC CFLAGS="$SLKCFLAGS -DDEBIAN_VERSION=\"\\\"10\\\"\" -I/usr/include/libbsd" LDFLAGS="-lbsd"
 
 install -Dsm755 nc $PKG/usr/bin/nc-openbsd
 

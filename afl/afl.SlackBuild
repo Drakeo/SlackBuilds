@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=afl
 VERSION=2.52b
@@ -71,8 +71,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-CFLAGS="$SLKCFLAGS" make PREFIX=/usr HELPER_PATH=/usr/lib${LIBDIRSUFFIX}/afl DOC_PATH=/usr/doc/afl-$VERSION
-CFLAGS="$SLKCFLAGS" make PREFIX=/usr HELPER_PATH=/usr/lib${LIBDIRSUFFIX}/afl -C llvm_mode
+CFLAGS="$SLKCFLAGS" make  PREFIX=/usr HELPER_PATH=/usr/lib${LIBDIRSUFFIX}/afl DOC_PATH=/usr/doc/afl-$VERSION
+CFLAGS="$SLKCFLAGS" make  PREFIX=/usr HELPER_PATH=/usr/lib${LIBDIRSUFFIX}/afl -C llvm_mode
 make PREFIX=/usr HELPER_PATH=/usr/lib${LIBDIRSUFFIX}/afl DOC_PATH=/usr/doc/afl-$VERSION DESTDIR=$PKG install
 
 # Don't ship .la files:

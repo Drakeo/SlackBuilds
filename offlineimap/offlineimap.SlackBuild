@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=offlineimap
 VERSION=7.3.3
@@ -65,8 +65,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make
-make -C docs man
+make -j$NPROC
+make -j$NPROC -C docs man
 python setup.py install --root=$PKG
 
 # Install man pages

@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=phpspy
 VERSION=0.5.0
@@ -86,7 +86,7 @@ if [ -e $CWD/patches ]; then
   done
 fi
 
-make CFLAGS="$SLKCFLAGS" prefix=/usr phpspy_dynamic
+make -j$NPROC CFLAGS="$SLKCFLAGS" prefix=/usr phpspy_dynamic
 install -Dsm 755 phpspy $PKG/bin/phpspy
 
 # Don't ship .la files:

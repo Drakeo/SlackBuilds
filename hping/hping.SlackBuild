@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hping
 VERSION=3.0.0_git
@@ -91,7 +91,7 @@ patch -p1 -i $CWD/patches/Makefile.in.patch
 sed "s/CCOPT= -O2 -Wall/CCOPT= $SLKCFLAGS/" -i Makefile.in
 MANPATH="/usr/man" ./configure
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

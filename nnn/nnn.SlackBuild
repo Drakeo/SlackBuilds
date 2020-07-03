@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=nnn
 VERSION=2.8.1
@@ -86,7 +86,7 @@ if [ -e $CWD/patches ]; then
   done
 fi
 
-make PREFIX=/usr CFLAGS_OPTIMIZATION="$SLKCFLAGS"
+make -j$NPROC PREFIX=/usr CFLAGS_OPTIMIZATION="$SLKCFLAGS"
 make DESTDIR=$PKG PREFIX=/usr MANPREFIX=/usr/man install
 
 # Don't ship .la files:

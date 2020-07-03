@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=fontforge
 VERSION=20200314
@@ -90,7 +90,7 @@ fi
 
 mkdir -p build
 cd build
-cmake -Wno-dev -GNinja \
+cmake -j$NPROC -Wno-dev -GNinja \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=Release \

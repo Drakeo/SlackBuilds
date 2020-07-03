@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=id3
 VERSION=0.80
@@ -71,8 +71,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make CFLAGS="$SLKCFLAGS" LDFLAGS="$SLKCFLAGS"
-make prefix="$PKG/usr" install-strip
+make -j$NPROC CFLAGS="$SLKCFLAGS" LDFLAGS="$SLKCFLAGS"
+make -j$NPROC prefix="$PKG/usr" install-strip
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=smem
 VERSION=1.4
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" smemcap
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" smemcap
 install -Dm755 smem $PKG/usr/bin/smem
 install -Dsm755 smemcap $PKG/usr/bin/smemcap
 install -Dm644 smem.8 $PKG/usr/man/man8/smem.8

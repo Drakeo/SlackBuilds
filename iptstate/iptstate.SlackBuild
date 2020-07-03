@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=iptstate
 VERSION=2.2.6
@@ -69,7 +69,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make  LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
+make -j$NPROC  LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
 install -Dsm755 iptstate $PKG/usr/bin/iptstate
 install -Dm644 iptstate.8 $PKG/usr/man/man8/iptstate.8
 gzip -9 $PKG/usr/man/man8/iptstate.8

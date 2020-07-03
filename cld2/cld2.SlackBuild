@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=cld2
 SRCVERSION=b56fa78a2fe44ac2851bae5bf4f4693a0644da7b

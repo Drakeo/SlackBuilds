@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hungrycat
 VERSION=0.4.1
@@ -74,7 +74,7 @@ chmod -R u+w,go+r-w,a-s .
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
 install -Dsm755 $PKGNAM $PKG/usr/bin/$PKGNAM
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

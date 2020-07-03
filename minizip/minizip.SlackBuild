@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=zlib
 PKGNAM=minizip
@@ -92,7 +92,7 @@ CFLAGS="$SLKCFLAGS -I../.." \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --static
-make
+make -j$NPROC
 
 cd contrib/minizip
 cp Makefile Makefile.orig
@@ -111,9 +111,9 @@ CFLAGS="$SLKCFLAGS -I../.." \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
-make CFLAGS="$SLKCFLAGS -I../.." -f Makefile.orig
+make -j$NPROC CFLAGS="$SLKCFLAGS -I../.." -f Makefile.orig
 install -Dm755 minizip miniunz -t $PKG/usr/bin
 
 # Don't ship .la files:

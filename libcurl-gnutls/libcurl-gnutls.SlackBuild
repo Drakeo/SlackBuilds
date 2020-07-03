@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libcurl-gnutls
 PRGNAM=curl
@@ -101,8 +101,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -C lib
-make -C lib DESTDIR=$PKG install
+make -j$NPROC -C lib
+make -j$NPROC -C lib DESTDIR=$PKG install
 
 mv ${PKG}/usr/lib${LIBDIRSUFFIX}/libcurl{,-gnutls}.so.4.6.0
 rm ${PKG}/usr/lib${LIBDIRSUFFIX}/libcurl.so*

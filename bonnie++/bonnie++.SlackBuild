@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bonnie++
 VERSION=1.97.3
@@ -91,7 +91,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make MORECFLAGS="$SLKCFLAGS"
+make -j$NPROC MORECFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

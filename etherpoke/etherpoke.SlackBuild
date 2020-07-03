@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=etherpoke
 VERSION=2.5.1
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
+make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS"
 install -Dsm755 src/$PKGNAM $PKG/usr/bin/$PKGNAM
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

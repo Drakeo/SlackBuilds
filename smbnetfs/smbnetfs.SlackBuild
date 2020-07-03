@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=smbnetfs
 VERSION=0.6.0
@@ -88,7 +88,7 @@ CXXFLAGS="$SLKCFLAGS" \
 
 sed "s#^docdir.*#docdir = /usr/doc/$PKGNAM-$VERSION/#" -i Makefile
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

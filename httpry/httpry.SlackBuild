@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=httpry
 VERSION=0.1.8
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make \
+make -j$NPROC \
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
 CCFLAGS="$SLKCFLAGS"
 

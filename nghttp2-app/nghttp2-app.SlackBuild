@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=nghttp2
 PKGNAM=nghttp2-app
@@ -100,9 +100,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
-make -C lib DESTDIR=$PKG uninstall
+make -j$NPROC -C lib DESTDIR=$PKG uninstall
 
 # Remove empty dir and dir exists in slackware package
 rm -rf $PKG/usr/{include,lib*,share}

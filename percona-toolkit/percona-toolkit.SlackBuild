@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=percona-toolkit
 VERSION=3.2.0
@@ -84,8 +84,8 @@ perl Makefile.PL \
   INSTALLDIRS=vendor \
   INSTALLVENDORMAN1DIR=/usr/man/man1
 
-make
-make test
+make -j$NPROC
+make -j$NPROC test
 make install DESTDIR=$PKG
 
 # Don't ship .la files:

@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=git-cola
 VERSION=3.3
@@ -84,9 +84,9 @@ sed -e 's|/share/man/|/man/|g' \
     -i setup* \
     -i share/doc/git-cola/Makefile
 
-make PYTHON=python3 DESTDIR=$PKG prefix=/usr install
+make -j$NPROC PYTHON=python3 DESTDIR=$PKG prefix=/usr install
 if [ -x "$(which sphinx-build)" ]; then
-  make PYTHON=python3 DESTDIR=$PKG prefix=/usr install-doc install-man install-html
+  make -j$NPROC PYTHON=python3 DESTDIR=$PKG prefix=/usr install-doc install-man install-html
 fi
 
 

@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=neovim
 COMMIT=74fed7d50fc80fd9889a09812329e0c281bfde52
@@ -82,7 +82,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir build
 cd build
-cmake \
+cmake -j$NPROC \
   -GNinja \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=Release \

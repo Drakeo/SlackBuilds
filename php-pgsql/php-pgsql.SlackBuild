@@ -29,7 +29,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=php
 PKGNAM=php-pgsql
@@ -215,7 +215,7 @@ CXXFLAGS="$SLKCFLAGS -DU_USING_ICU_NAMESPACE=1" \
 # I would recommend *against* and will take no responbility for turning on
 # "safe" mode.
 
-make
+make -j$NPROC
 install -Dm755 modules/*pgsql.so -t ${PKG}/usr/lib${LIBDIRSUFFIX}/php/extensions/
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION

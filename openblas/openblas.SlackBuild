@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=OpenBLAS
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
@@ -104,12 +104,12 @@ PARAMS="NO_STATIC=1 \
   OPENBLAS_LIBRARY_DIR=/usr/lib$LIBDIRSUFFIX \
   PREFIX=/usr"
 
-make \
+make -j$NPROC \
   MAKE_NB_JOBS="$(($(nproc)+1))" \
   CFLAGS="$SLKCFLAGS" \
   $PARAMS
 
-make \
+make -j$NPROC \
   DESTDIR=$PKG \
   $PARAMS \
   install

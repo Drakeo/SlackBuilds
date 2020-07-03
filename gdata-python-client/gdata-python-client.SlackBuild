@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=gdata-python-client
 COMMIT=3541dfa420b9095ffcfb28c59994b65dfe465ffd

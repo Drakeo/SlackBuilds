@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=JSON
 PKGNAM=perl-$(echo $PRGNAM | tr A-Z a-z)
@@ -87,8 +87,8 @@ perl Makefile.PL \
   INSTALLVENDORMAN1DIR=/usr/man/man1 \
   INSTALLVENDORMAN3DIR=/usr/man/man3
 
-make
-make test
+make -j$NPROC
+make -j$NPROC test
 make install DESTDIR=$PKG
 
 # Don't ship .la files:

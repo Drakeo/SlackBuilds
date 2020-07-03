@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=libx86emu
 VERSION=2.2
@@ -85,7 +85,7 @@ chmod -x git2log
 # Create VERSION file
 echo $VERSION > VERSION
 
-make CFLAGS="$SLKCFLAGS"
+make -j$NPROC CFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

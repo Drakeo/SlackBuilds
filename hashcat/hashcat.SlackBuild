@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=hashcat
 VERSION=6.0.0
@@ -89,8 +89,8 @@ MAKE_OPTIONS="PREFIX=/usr \
               USE_SYSTEM_OPENCL=1 \
               USE_SYSTEM_XXHASH=1"
 
-make $MAKE_OPTIONS
-make $MAKE_OPTIONS DESTDIR=$PKG install
+make -j$NPROC $MAKE_OPTIONS
+make -j$NPROC $MAKE_OPTIONS DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

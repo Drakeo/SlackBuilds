@@ -24,7 +24,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=john
 PKGNAM=john
@@ -91,18 +91,18 @@ if [[ "$ARCH" == "x86_64" ]]; then
   LIBDIRSUFFIX="64"
   if grep -q '^flags.* avx' /proc/cpuinfo; then
     ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-avx
   fi
 
   if grep -q "^flags.* xop" /proc/cpuinfo; then
     ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-xop
   fi
 
     ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john
 
     install -Dm755 $CWD/files/john-64.sh $PKG/usr/bin/john
@@ -111,30 +111,30 @@ elif [[ "$ARCH" == "x86" ]]; then
 
   if grep -q "^flags.* avx" /proc/cpuinfo; then
     ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-avx
   fi
 
   if grep -q "^flags.* xop" /proc/cpuinfo; then
     ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-xop
   fi
 
   if grep -q "^flags.* sse2" /proc/cpuinfo; then
     ./configure $SLKCONF CFLAGS="$SLKCFLAGS -msse2"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-sse2
   fi
 
   if grep -q "^flags.* mmx" /proc/cpuinfo; then
     ./configure $SLKCONF CFLAGS="$SLKCFLAGS -mmmx"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-mmx
   fi
 
     ./configure $SLKCONF CFLAGS="$SLKCFLAGS"
-    make clean; make
+    make -j$NPROC clean; make -j$NPROC
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john
 
     install -Dm755 $CWD/files/john.sh $PKG/usr/bin/john

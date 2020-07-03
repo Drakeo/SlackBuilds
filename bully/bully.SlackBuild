@@ -26,7 +26,7 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bully
 COMMIT=3ab3bc830738f447dce112e8551e3ac8193bf521
@@ -88,8 +88,8 @@ fi
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-make -C src prefix=/usr
-make -C src DESTDIR=$PKG install prefix=/usr
+make -j$NPROC -C src prefix=/usr
+make -j$NPROC -C src DESTDIR=$PKG install prefix=/usr
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

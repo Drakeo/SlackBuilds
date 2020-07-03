@@ -25,7 +25,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=jhead
 VERSION=3.00
@@ -69,7 +69,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" make
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" make -j$NPROC
 
 install -Dsm755 jhead $PKG/usr/bin/jhead
 install -Dm644 jhead.1 $PKG/usr/man/man1/jhead.1

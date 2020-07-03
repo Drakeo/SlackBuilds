@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=notmuch
 VERSION=0.29.3
@@ -92,12 +92,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Install ruby bindings
 sed 's|INSTALL = .*[^D]$|& -D|' -i bindings/ruby/Makefile
-make -C bindings/ruby exec_prefix=$PKG/usr prefix=/usr install
+make -j$NPROC -C bindings/ruby exec_prefix=$PKG/usr prefix=/usr install
 
 # Install python bindings
 cd bindings/python
@@ -108,10 +108,10 @@ cd -
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 # Install vim plugin
-make -C vim DESTDIR=$PKG prefix="/usr/share/vim/vimfiles" install
+make -j$NPROC -C vim DESTDIR=$PKG prefix="/usr/share/vim/vimfiles" install
 
 # Install mutt script (required some perl scripts at runtime)
-make -C contrib/notmuch-mutt
+make -j$NPROC -C contrib/notmuch-mutt
 install -Dm644 contrib/notmuch-mutt/notmuch-mutt.1 $PKG/usr/man/man1/notmuch-mutt.1
 install -Dm755 contrib/notmuch-mutt/notmuch-mutt $PKG/usr/bin/notmuch-mutt
 

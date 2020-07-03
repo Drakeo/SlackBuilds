@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=nuttcp
 VERSION=8.1.4
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make OPT="$SLKCFLAGS" 
+make -j$NPROC OPT="$SLKCFLAGS" 
 install -Dm0644 ${PKGNAM}.8 $PKG/usr/man/man8/${PKGNAM}.8
 install -Dsm0755 $PKGNAM-$VERSION $PKG/usr/sbin/$PKGNAM
 

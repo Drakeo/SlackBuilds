@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=modsecurity-nginx
 SRCVERSION=v1.0.1
@@ -96,7 +96,7 @@ fi
   --with-compat \
   --add-dynamic-module=../$PKGNAM-$SRCVERSION
 
-make modules
+make -j$NPROC modules
 install -Dsm755 objs/ngx_http_modsecurity_module.so -t $PKG/usr/lib$LIBDIRSUFFIX/nginx/modules/
 
 cd ../$PKGNAM-$SRCVERSION

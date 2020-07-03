@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=tcpreplay
 VERSION=4.3.3
@@ -104,7 +104,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux \
   ac_cv_header_net_bpf_h=n
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install-strip
 
 if [ -d $PKG/usr/man ]; then

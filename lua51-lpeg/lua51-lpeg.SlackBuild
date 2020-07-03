@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=lpeg
 PKGNAM=lua51-lpeg
@@ -72,7 +72,7 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make COPT="$SLKCFLAGS" LUADIR=/usr/include/lua5.1 -j1
+make -j$NPROC COPT="$SLKCFLAGS" LUADIR=/usr/include/lua5.1 -j1
 install -Dsm755 lpeg.so $PKG/usr/lib${LIBDIRSUFFIX}/lua/5.1/lpeg.so
 install -Dm644 re.lua $PKG/usr/share/lua/5.1/re.lua
 

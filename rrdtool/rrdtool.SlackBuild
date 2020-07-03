@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=rrdtool
 VERSION=1.7.0
@@ -104,7 +104,7 @@ RRDDOCDIR="/usr/doc/$PKGNAM-$VERSION" \
   --docdir=$PKG/usr/doc/rrdtool-$VERSION \
   --build=$ARCH-slackware-linux
 
-make LIBS+="-lglib-2.0"
+make -j$NPROC LIBS+="-lglib-2.0"
 
 # Correct man paths in the Perl bindings.
 sed -e 's|/usr/share/man|/usr/man|g' \

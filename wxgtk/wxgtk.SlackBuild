@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=wxgtk
 PRGNAM=wxWidgets
@@ -105,8 +105,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-shared \
   --build=$ARCH-slackware-linux
 
-make
-make -C locale allmo
+make -j$NPROC
+make -j$NPROC -C locale allmo
 make DESTDIR=$PKG install
 
 # Don't ship .la files:
@@ -114,7 +114,7 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 mv $PKG/usr/bin/wx-config{,-gtk2}
 rm -r $PKG/usr/{include,share,lib$LIBDIRSUFFIX/libwx_base*,bin/wxrc*}
 
-make clean
+make -j$NPROC clean
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -137,8 +137,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-shared \
   --build=$ARCH-slackware-linux
 
-make
-make -C locale allmo
+make -j$NPROC
+make -j$NPROC -C locale allmo
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

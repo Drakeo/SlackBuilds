@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=optipng
 VERSION=0.7.7
@@ -85,7 +85,7 @@ CFLAGS="$SLKCFLAGS" \
   -mandir=/usr/man \
   -with-system-zlib \
 
-make CFLAGS="$SLKCFLAGS -W -Wall" -C src
+make -j$NPROC CFLAGS="$SLKCFLAGS -W -Wall" -C src
 make install DESTDIR=$PKG prefix=/usr -C  src
 
 # Don't ship .la files:

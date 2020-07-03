@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=p0f
 VERSION=3.09b
@@ -85,11 +85,11 @@ sed 's|"p0f.fp"|"/etc/p0f/p0f.fp"|' -i config.h
 # Set flags on tools
 sed "s|-g -ggdb|${SLKCFLAGS}|g" -i tools/Makefile
 
-make
+make -j$NPROC
 cd tools
-  make p0f-client
-  make p0f-sendsyn
-  make p0f-sendsyn6
+  make -j$NPROC p0f-client
+  make -j$NPROC p0f-sendsyn
+  make -j$NPROC p0f-sendsyn6
 cd -
 
 install -Dsm755 p0f "$PKG/usr/sbin/p0f"

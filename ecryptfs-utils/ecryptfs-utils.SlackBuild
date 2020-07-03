@@ -25,7 +25,7 @@
 
 set -e 
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ecryptfs-utils
 VERSION=111
@@ -101,7 +101,7 @@ CFLAGS="$SLKCFLAGS -D_FILE_OFFSET_BITS=64" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

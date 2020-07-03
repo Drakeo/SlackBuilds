@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=arpwatch
 VERSION=2.1a15
@@ -90,7 +90,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make ARPDIR=/var/lib/$PKGNAM
+make -j$NPROC ARPDIR=/var/lib/$PKGNAM
 mkdir -p $PKG/usr/sbin $PKG/usr/man/man8
 make DESTDIR=$PKG install install-man
 

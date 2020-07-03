@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=isomaster
 VERSION=1.3.13
@@ -73,12 +73,12 @@ chmod -R u+w,go+r-w,a-s .
 
 CFLAGS="$SLKCFLAGS" \
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
-make \
+make -j$NPROC \
 PREFIX=/usr \
 MYMANPATH=/usr/man/man1 \
 MYDOCPATH=/usr/doc/$PKGNAM-$VERSION/bkisofs
 
-make \
+make -j$NPROC \
 PREFIX=/usr \
 MYMANPATH=/usr/man/man1 \
 MYDOCPATH=/usr/doc/$PKGNAM-$VERSION/bkisofs \

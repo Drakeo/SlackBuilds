@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=packETH
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
@@ -99,7 +99,7 @@ CFLAGS="$SLKCFLAGS"
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make CFLAGS="$SLKCFLAGS"
+make -j$NPROC CFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG install
 
 # Don't ship .la files:
@@ -107,7 +107,7 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 
 cd cli
-make CPPFLAGS="$SLKCFLAGS"
+make -j$NPROC CPPFLAGS="$SLKCFLAGS"
 install -Dm755 packETHcli $PKG/usr/bin/packETHcli
 cd -
 

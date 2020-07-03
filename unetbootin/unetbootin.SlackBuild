@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=unetbootin
 VERSION=681
@@ -85,10 +85,10 @@ chmod -R u+w,go+r-w,a+X-s .
 sed -i '/^RESOURCES/d' unetbootin.pro
 lupdate unetbootin.pro
 lrelease unetbootin.pro
-qmake \
+qmake -j$NPROC \
 PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" \
 "DEFINES += NOSTATIC" "RESOURCES -= unetbootin.qrc"
-make
+make -j$NPROC
 
 install -Dsm755 $PKGNAM $PKG/usr/bin/unetbootin
 

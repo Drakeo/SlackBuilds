@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=modsecurity-apache
 SRCVERSION=v0.0.9-beta1
@@ -105,7 +105,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 install -Dsm755 src/.libs/mod_security3.so $PKG/usr/lib$LIBDIRSUFFIX/httpd/modules/mod_security3.so
 
 # Add conf files

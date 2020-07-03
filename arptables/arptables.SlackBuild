@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=arptables
 VERSION=0.0.4
@@ -69,7 +69,7 @@ cd $PKGNAM-v$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make COPT_FLAGS="$SLKCFLAGS" PREFIX=/usr LIBDIR=/usr/lib${LIBDIRSUFFIX}
+make -j$NPROC COPT_FLAGS="$SLKCFLAGS" PREFIX=/usr LIBDIR=/usr/lib${LIBDIRSUFFIX}
 make DESTDIR=$PKG COPT_FLAGS="$SLKCFLAGS" PREFIX=/usr LIBDIR=/usr/lib${LIBDIRSUFFIX} install
 
 # Don't ship .la files:

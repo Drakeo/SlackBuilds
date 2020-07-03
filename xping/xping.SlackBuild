@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=xping
 VERSION=1.4.2
@@ -79,7 +79,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
+make -j$NPROC CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
 install -Dsm755 $PKGNAM $PKG/usr/sbin/$PKGNAM
 
 install -Dm644 ${PKGNAM}.8 $PKG/usr/man/man8/${PKGNAM}.8

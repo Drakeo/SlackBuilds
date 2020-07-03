@@ -27,7 +27,7 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=zmap
 VERSION=2.1.1
@@ -83,9 +83,9 @@ chmod -R u+w,go+r-w,a+X-s .
 sed 's|share/man/|man/|' -i src/CMakeLists.txt
 
 # Fix install conf file
-sed '/install(SCRIPT InstallConfFiles.cmake)/d' -i CMakeLists.txt
+sed '/install(SCRIPT InstallConfFiles.cmake -j$NPROC)/d' -i CMakeLists.txt
 
-cmake \
+cmake -j$NPROC \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -95,7 +95,7 @@ cmake \
   -DRESPECT_INSTALL_PREFIX_CONFIG=ON \
   .
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

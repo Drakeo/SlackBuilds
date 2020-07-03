@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ladspa_sdk
 VERSION=1.13
@@ -78,13 +78,13 @@ if [ -e $CWD/patches ]; then
   done
 fi
 
-make \
+make -j$NPROC \
     CFLAGS="$SLKCFLAGS -I. -Wall -Werror -fPIC" \
     INSTALL_PLUGINS_DIR="/usr/lib${LIBDIRSUFFIX}/ladspa" \
     INSTALL_BINARY_DIR="/usr/bin" \
     -C src
 
-make install \
+make -j$NPROC install \
     INSTALL_PLUGINS_DIR="$PKG/usr/lib${LIBDIRSUFFIX}/ladspa" \
     INSTALL_BINARY_DIR="$PKG/usr/bin" \
     INSTALL_INCLUDE_DIR="$PKG/usr/include" \
@@ -120,7 +120,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-# Cleanup files left in /tmp by make
+# Cleanup files left in /tmp by make -j$NPROC
 rm -f /tmp/test.wav || true
 
 cd $PKG

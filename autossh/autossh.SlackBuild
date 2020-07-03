@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=autossh
 VERSION=1.4g
@@ -94,7 +94,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 install -Dsm755 autossh $PKG/usr/bin/autossh
 install -Dm644 autossh.1 $PKG/usr/man/man1/autossh.1
 

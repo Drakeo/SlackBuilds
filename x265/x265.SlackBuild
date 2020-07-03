@@ -30,7 +30,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PRGNAM=multicoreware
 PKGNAM=x265
@@ -82,7 +82,7 @@ if [ "$ARCH" = "x86_64" ]; then
 
   cd build-12
 
-  cmake \
+  cmake -j$NPROC \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -94,11 +94,11 @@ if [ "$ARCH" = "x86_64" ]; then
     -DENABLE_SHARED=OFF \
     -DCMAKE_BUILD_TYPE=Release \
     ../source
-  make
+  make -j$NPROC
 
   cd ../build-10
 
-  cmake \
+  cmake -j$NPROC \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -109,14 +109,14 @@ if [ "$ARCH" = "x86_64" ]; then
     -DENABLE_SHARED=OFF \
     -DCMAKE_BUILD_TYPE=Release \
     ../source
-  make
+  make -j$NPROC
 
   cd ../build-8
 
   ln -s ../build-10/libx265.a libx265_main10.a
   ln -s ../build-12/libx265.a libx265_main12.a
 
-  cmake \
+  cmake -j$NPROC \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -129,13 +129,13 @@ if [ "$ARCH" = "x86_64" ]; then
     -DLINKED_12BIT=ON \
     -DCMAKE_BUILD_TYPE=Release \
     ../source
-  make
+  make -j$NPROC
 
 else
 
   cd build-8
 
-  cmake \
+  cmake -j$NPROC \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -143,7 +143,7 @@ else
     -DENABLE_SHARED=ON \
     -DCMAKE_BUILD_TYPE=Release \
     ../source
-  make
+  make -j$NPROC
 
 fi
 

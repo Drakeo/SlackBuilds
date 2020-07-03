@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=gimp-elsamuko
 SRCVERSION=9a348747642534bf40d63008ccd712b7bc35c636

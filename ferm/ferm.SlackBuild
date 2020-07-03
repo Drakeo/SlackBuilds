@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=ferm
 VERSION=2.4.1
@@ -49,7 +49,7 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 # Install (Put systemd file in DOC dir)
-make \
+make -j$NPROC \
 PREFIX=$PKG/usr \
 MANDIR=$PKG/usr/man/man1 \
 DOCDIR=$PKG/usr/doc/$PKGNAM-$VERSION \

@@ -45,7 +45,7 @@ elif ! grep ^clamav: /etc/group 2>&1 > /dev/null; then
   exit 1
 fi
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=clamav
 VERSION=0.102.3
@@ -159,7 +159,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

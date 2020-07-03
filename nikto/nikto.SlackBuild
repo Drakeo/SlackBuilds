@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=nikto
 COMMIT="0b80a7fce2fe99123db102973319c4da85628803"

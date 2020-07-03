@@ -27,7 +27,7 @@
 #
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=omping
 VERSION=0.0.4
@@ -71,7 +71,7 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make PREFIX=/usr/ MANDIR=/usr/man CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
+make -j$NPROC PREFIX=/usr/ MANDIR=/usr/man CFLAGS="$SLKCFLAGS" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}"
 make DESTDIR=$PKG MANDIR=/usr/man PREFIX=/usr/ install
 
 # Don't ship .la files:

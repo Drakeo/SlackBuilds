@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=tinyxml2
 VERSION=7.0.1
@@ -76,15 +76,15 @@ for i in *.cpp *.h; do
   sed 's/\r//' -i $i
 done
 
-# Fix Cmake install directory.
+# Fix Cmake -j$NPROC install directory.
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
-sed -i "s|lib/cmake|lib${LIBDIRSUFFIX}/cmake|" CMakeLists.txt
+sed -i "s|lib/cmake -j$NPROC|lib${LIBDIRSUFFIX}/cmake -j$NPROC|" CMakeLists.txt
 
 mkdir -p build
 cd build
-cmake -Wno-dev \
+cmake -j$NPROC -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_LD_FLAGS_RELEASE:STRING="-L/usr/lib${LIBDIRSUFFIX}" \
@@ -97,7 +97,7 @@ cmake -Wno-dev \
   -DLIB_SUFFIX=$LIBDIRSUFFIX \
   ..
 
-make
+make -j$NPROC
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

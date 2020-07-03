@@ -27,7 +27,7 @@
 
 set -eu
 
-CWD=$(pwd)
+CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=apngdis
 VERSION=2.9
@@ -73,7 +73,7 @@ unzip $CWD/$PKGNAM-$VERSION-src.zip
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-make CFLAGS_OPT="$SLKCFLAGS"
+make -j$NPROC CFLAGS_OPT="$SLKCFLAGS"
 install -Dsm755 $PKGNAM $PKG/usr/bin/$PKGNAM
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION
