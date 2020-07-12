@@ -1,7 +1,7 @@
 PRGNAM="rtmpdump"
 VERSION="2.4_c5f04a5"
 HOMEPAGE="http://rtmpdump.mplayerhq.hu/"
-DOWNLOAD="https://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz"
+DOWNLOAD="https://raw.githubusercontent.com/Drakeo/drakeo.github.io/master/tarball/rtmpdump-c5f04a5.tar.gz"
 FILENAME="rtmpdump-c5f04a5.tar.gz"
 MD5SUM="64fc96a898c038d75bbaf13325b0fda2"
 SHASUM="04cf230bc8614fa005a38aee4163341217ac171a"
