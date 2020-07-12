@@ -74,7 +74,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \

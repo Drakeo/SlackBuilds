@@ -92,7 +92,7 @@ mkdir -p "test/TokenizerTest/objects"
 
 mkdir build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \

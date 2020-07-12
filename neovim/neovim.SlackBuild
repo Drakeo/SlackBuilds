@@ -82,7 +82,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir build
 cd build
-cmake -j$NPROC \
+cmake \
   -GNinja \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=Release \

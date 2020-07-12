@@ -95,7 +95,7 @@ fi
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \

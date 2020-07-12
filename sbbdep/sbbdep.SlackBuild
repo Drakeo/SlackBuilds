@@ -71,7 +71,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=Release \

@@ -86,7 +86,7 @@ fi
 
 mkdir -p build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \

@@ -52,7 +52,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DBUILD_TESTS=OFF \

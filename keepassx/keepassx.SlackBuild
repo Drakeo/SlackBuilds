@@ -72,7 +72,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=None \
   -DCMAKE_INSTALL_PREFIX=/usr \

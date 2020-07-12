@@ -86,11 +86,11 @@ if [ -e $CWD/patches/ ]; then
   done
 fi
 
-sed -i "s|lib/cmake -j$NPROC/websocketpp|lib${LIBDIRSUFFIX}/cmake -j$NPROC/websocketpp|" CMakeLists.txt
+sed -i "s|lib/cmake/websocketpp|lib${LIBDIRSUFFIX}/cmake/websocketpp|" CMakeLists.txt
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=None \

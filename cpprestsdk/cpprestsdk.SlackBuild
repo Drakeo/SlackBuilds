@@ -88,7 +88,7 @@ fi
 
 mkdir -p build
 cd build
-cmake -j$NPROC ../Relese -Wno-dev \
+cmake ../Relese -Wno-dev \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG -Wno-deprecated-copy -Wno-redundant-move " \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \

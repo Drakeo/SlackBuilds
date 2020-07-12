@@ -85,18 +85,18 @@ if [ -e $CWD/patches/ ]; then
 fi
 
 # Fix man path
-sed 's|\${SHARE_INSTALL}/man/man|man/man|g' -i CMakeScripts/Pod2man.cmake -j$NPROC
+sed 's|\${SHARE_INSTALL}/man/man|man/man|g' -i CMakeScripts/Pod2man.cmake
 
 # Fix lib path
-sed "/INKSCAPE_LIBDIR/s/lib/lib$LIBDIRSUFFIX/g" -i CMakeScripts/ConfigPaths.cmake -j$NPROC
+sed "/INKSCAPE_LIBDIR/s/lib/lib$LIBDIRSUFFIX/g" -i CMakeScripts/ConfigPaths.cmake
 sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" \
     -e "/LIBRARY_OUTPUT_PATH/s|/lib|/lib$LIBDIRSUFFIX|" \
     -i CMakeLists.txt
-sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" -i src/CMakeLists.txt -i CMakeScripts/HelperMacros.cmake -j$NPROC
+sed -e "s|lib/inkscape|lib$LIBDIRSUFFIX/inkscape|g" -i src/CMakeLists.txt -i CMakeScripts/HelperMacros.cmake
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -fopenmp -pthread -DNDEBUG" \
   -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -fopenmp -pthread -DNDEBUG" \
   -DCMAKE_BUILD_TYPE=Release \

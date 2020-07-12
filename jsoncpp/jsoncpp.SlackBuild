@@ -81,7 +81,7 @@ chmod -R u+w,go+r-w,a+X-s .
 
 mkdir -p build
 cd build
-cmake -j$NPROC -Wno-dev \
+cmake -Wno-dev \
   -DCMAKE_C_FLAGS="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
   -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \

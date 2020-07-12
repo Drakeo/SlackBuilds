@@ -99,7 +99,7 @@ mv cuneiform_src/Kern/hhh/tigerh/h/strings.h cuneiform_src/Kern/hhh/tigerh/h/str
 LIBMAGICK=$(ls -1 /usr/lib${LIBDIRSUFFIX}/libMagick++*.so.?)
 mkdir -p build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG -std=c++98" \

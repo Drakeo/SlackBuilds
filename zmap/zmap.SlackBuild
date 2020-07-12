@@ -83,9 +83,9 @@ chmod -R u+w,go+r-w,a+X-s .
 sed 's|share/man/|man/|' -i src/CMakeLists.txt
 
 # Fix install conf file
-sed '/install(SCRIPT InstallConfFiles.cmake -j$NPROC)/d' -i CMakeLists.txt
+sed '/install(SCRIPT InstallConfFiles.cmake)/d' -i CMakeLists.txt
 
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
   -DCMAKE_INSTALL_PREFIX=/usr \

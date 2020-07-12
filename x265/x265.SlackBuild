@@ -81,7 +81,7 @@ if [ "$ARCH" = "x86_64" ]; then
 
   cd build-12
 
-  cmake -j$NPROC \
+  cmake \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -97,7 +97,7 @@ if [ "$ARCH" = "x86_64" ]; then
 
   cd ../build-10
 
-  cmake -j$NPROC \
+  cmake \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -115,7 +115,7 @@ if [ "$ARCH" = "x86_64" ]; then
   ln -s ../build-10/libx265.a libx265_main10.a
   ln -s ../build-12/libx265.a libx265_main12.a
 
-  cmake -j$NPROC \
+  cmake \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -134,7 +134,7 @@ else
 
   cd build-8
 
-  cmake -j$NPROC \
+  cmake \
     -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_INSTALL_PREFIX=/usr \

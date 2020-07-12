@@ -89,7 +89,7 @@ sed "s/\(CMAKE_C_FLAGS_RELEASE \".*2\)\"/\1 ${SLKCFLAGS}\"/" -i CMakeLists.txt
 mkdir -p build build6
 
 cd build
-cmake -j$NPROC \
+cmake \
  -DCMAKE_C_FLAGS="$SLKCFLAGS" \
  -DCMAKE_BUILD_TYPE=Release \
  -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \

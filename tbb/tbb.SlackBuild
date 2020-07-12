@@ -97,11 +97,11 @@ ln -s libtbbmalloc.so.2 $PKG/usr/lib${LIBDIRSUFFIX}/libtbbmalloc.so
 ln -s libtbbmalloc_proxy.so.2 $PKG/usr/lib${LIBDIRSUFFIX}/libtbbmalloc_proxy.so
 cp -a include/tbb $PKG/usr/include/
 
-cmake -j$NPROC \
-    -DINSTALL_DIR=$PKG/usr/lib${LIBDIRSUFFIX}/cmake -j$NPROC/TBB \
+cmake \
+    -DINSTALL_DIR=$PKG/usr/lib${LIBDIRSUFFIX}/cmake/TBB \
     -DSYSTEM_NAME=Linux \
     -TBB_VERSION_FILE=$PKG/usr/include/tbb/tbb_stddef.h \
-    -P cmake -j$NPROC/tbb_config_installer.cmake -j$NPROC
+    -P cmake/tbb_config_installer.cmake
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

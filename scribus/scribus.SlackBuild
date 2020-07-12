@@ -86,7 +86,7 @@ sed -e "s|CMAKE_INSTALL_DATAROOTDIR}/man/|CMAKE_INSTALL_PREFIX}/man/|g" \
 
 mkdir -p build
 cd build
-cmake -j$NPROC \
+cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_BUILD_TYPE=none \
