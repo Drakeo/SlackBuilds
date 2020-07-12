@@ -29,7 +29,7 @@ set -eu
 cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
 
 PKGNAM=bashtop
-VERSION=0.9.19
+VERSION=0.9.22
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
