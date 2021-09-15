@@ -2,7 +2,7 @@
 #
 # Slackware build script for ndpi
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,12 +27,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nDPI
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
-COMMIT=b2c24558c53a282e138e0b86ab684cdcde1f358f
-VERSION=3.3_$( echo $COMMIT | head -c7)
+SRCVERSION=90c6fd99a78e3b87d5f1bc61943cf9affc4bb924
+VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -74,9 +74,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$COMMIT
-tar xvf $CWD/$PRGNAM-$COMMIT.tar.gz || tar xvf $CWD/$COMMIT.tar.gz
-cd $PRGNAM-$COMMIT
+rm -rf $PRGNAM-$SRCVERSION
+tar xvf $CWD/$PRGNAM-$SRCVERSION.tar.gz || tar xvf $CWD/$SRCVERSION.tar.gz
+cd $PRGNAM-$SRCVERSION
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -96,7 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
 ./autogen.sh \
   --prefix=/usr
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

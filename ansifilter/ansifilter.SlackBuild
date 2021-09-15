@@ -2,7 +2,7 @@
 #
 # Slackware build script for ansifilter
 #
-# Copyright 2017-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2.18-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 set -e
 
 PRGNAM=ansifilter
-VERSION=2.16
+VERSION=2.18
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 
@@ -38,7 +38,7 @@ if [ -z ${ARCH:=""} ]; then
   esac
 fi
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
@@ -80,9 +80,9 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 
-make -j$NPROC EXTRA_CXXFLAGS="$SLKCFLAGS"
+make EXTRA_CXXFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG man_dir=/usr/man/man1 doc_dir=/usr/doc/$PRGNAM-$VERSION install
-make QMAKE=qmake-qt5  EXTRA_CXXFLAGS="$SLKCFLAGS" gui
+make QMAKE=qmake-qt5 EXTRA_CXXFLAGS="$SLKCFLAGS" gui
 make DESTDIR=$PKG install-gui
 
 # Don't ship .la files:

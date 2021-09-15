@@ -2,7 +2,7 @@
 #
 # Slackware build script for jack
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jack2
 PKGNAM=jack
-VERSION=1.9.14
+VERSION=1.9.19
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -89,7 +89,7 @@ fi
 
 # Minor source of incompatibility between jack 1.x and 2.x: some jack
 # apps don't add -lpthread to their CFLAGS because they assume jack.pc
-# will already include it (it does, in 1.x). So make -j$NPROC 2 act like 1.
+# will already include it (it does, in 1.x). So make 2 act like 1.
 # (Thanks to SBo)
 sed -i '/^Libs:/s/$/ -lpthread/' jack.pc.in
 

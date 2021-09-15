@@ -2,7 +2,7 @@
 #
 # Slackware build script for libtorrent-rasterbar
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=libtorrent-rasterbar
-VERSION=1.2.7
-BUILD=${BUILD:-1}
+VERSION=2.0.4
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -80,40 +80,35 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 # Apply patches
-if [ -e $CWD/patches/ ]; then
-  for PATCH in $CWD/patches/*.patch; do
-    patch -p1 -i $PATCH
-  done
+if [ -e $CWD/patches ]; then
+  if [ -e $CWD/patches/series ]; then
+    for PATCH in $(cat $CWD/patches/series); do
+      patch -p1 -i $CWD/patches/$PATCH
+    done
+  else
+    for PATCH in $CWD/patches/*.patch; do
+      patch -p1 -i $PATCH
+    done
+  fi
 fi
 
-PYTHON="python3" \
-LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --infodir=/usr/info \
-  --docdir=/usr/doc/$PKGNAM-$VERSION \
-  --enable-static=no \
-  --enable-shared=yes \
-  --with-libiconv \
-  --enable-python-binding \
-  --with-boost-system=boost_system \
-  --with-boost-python=boost_python3 \
-  --with-boost-libdir=/usr/lib${LIBDIRSUFFIX} \
-  --host=$ARCH-slackware-linux \
-  --build=$ARCH-slackware-linux
+mkdir -p build
+cd build
+cmake -Wno-dev \
+  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_CXX_STANDARD=14 \
+  -Dpython-bindings=ON \
+  -Dpython-egg-info=ON \
+  -Dbuild_examples=OFF \
+  -Dbuild_tools=ON \
+  ..
 
-make -j$NPROC -j1
+make
 make DESTDIR=$PKG install
 
-make -j$NPROC -C examples dump_torrent make -j$NPROC_torrent
-install -Dm755 examples/dump_torrent $PKG/usr/bin/dump_torrent
-install -Dm755 examples/make -j$NPROC_torrent $PKG/usr/bin/make -j$NPROC_torrent
+cd ..
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

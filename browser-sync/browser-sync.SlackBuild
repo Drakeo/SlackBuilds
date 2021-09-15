@@ -2,7 +2,7 @@
 #
 # Slackware build script for browser-sync
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=browser-sync
-VERSION=2.26.7
+VERSION=2.27.5
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -72,6 +72,7 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX
 DESTDIR=$PKG npm install --user root -g --prefix $PKG/usr $CWD/$PKGNAM-$VERSION.tgz
 
 # Remove empty /usr/etc dir

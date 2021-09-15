@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=tc-play
 VERSION=3.3
@@ -94,7 +94,7 @@ cmake -Wno-dev \
   -DLIB_SUFFIX=$LIBDIRSUFFIX \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

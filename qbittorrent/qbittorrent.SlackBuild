@@ -2,7 +2,7 @@
 #
 # Slackware build script for qbittorrent
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=qbittorrent
-VERSION=4.2.2
-BUILD=${BUILD:-3}
+VERSION=4.3.8
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -79,23 +79,37 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --infodir=/usr/info \
-  --docdir=/usr/doc/$PKGNAM-$VERSION \
-  --disable-qt-dbus \
-  --host=$ARCH-slackware-linux \
-  --build=$ARCH-slackware-linux
+mkdir -p build-nox
+cd build-nox
+cmake -Wno-dev \
+  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
+  -DCMAKE_CXX_STANDARD=14 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DGUI=OFF \
+  -DWEBUI=ON \
+  -DSYSTEMD=OFF \
+  ..
 
-make -j$NPROC
-make  INSTALL_ROOT=$PKG install
+make
+install -Dm755 $PKGNAM-nox -t $PKG/usr/bin
+cd ..
 
+mkdir -p build
+cd build
+cmake -Wno-dev \
+  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
+  -DCMAKE_CXX_STANDARD=14 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DGUI=ON \
+  -DWEBUI=OFF \
+  -DSYSTEMD=OFF \
+  ..
+
+make
+make DESTDIR=$PKG install
+cd ..
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

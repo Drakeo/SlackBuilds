@@ -27,10 +27,10 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=adns
-VERSION=1.5.1
+VERSION=1.6.0
 BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -100,7 +100,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

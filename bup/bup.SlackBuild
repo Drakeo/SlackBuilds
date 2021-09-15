@@ -2,7 +2,7 @@
 #
 # Slackware build script for bup
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=bup
-VERSION=0.30
-BUILD=${BUILD:-4}
+SRCVERSION=0.32
+VERSION=$(echo $SRCVERSION | tr - _)
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -72,9 +73,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PKGNAM-$VERSION
-tar xvf $CWD/$PKGNAM-$VERSION.tar.gz || tar xvf $CWD/$VERSION.tar.gz
-cd $PKGNAM-$VERSION
+rm -rf $PKGNAM-$SRCVERSION
+tar xvf $CWD/$PKGNAM-$SRCVERSION.tar.gz || tar xvf $CWD/$SRcVERSION.tar.gz
+cd $PKGNAM-$SRCVERSION
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -88,13 +89,15 @@ fi
 
 ./configure
 
-make -j$NPROC CFLAGS="$SLKCFLAGS" \
+make CFLAGS="$SLKCFLAGS" \
      CXXFLAGS="$SLKCFLAGS" \
      PREFIX="/usr" \
+     LIBDIR="/usr/lib${LIBDIRSUFFIX}/bup" \
      DOCDIR="/usr/doc/bup-$VERSION/html"
 
 make DESTDIR=$PKG \
      PREFIX="/usr" \
+     LIBDIR="/usr/lib${LIBDIRSUFFIX}/bup" \
      MANDIR="/usr/man" \
      DOCDIR="/usr/doc/bup-$VERSION/html" \
      install

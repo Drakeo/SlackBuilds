@@ -27,10 +27,10 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=qnetstatview
-VERSION=1.5.5
+VERSION=1.5.6
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -81,8 +81,8 @@ chmod -R u+w,go+r-w,a-s .
 
 qmake-qt5 PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile $PKGNAM.pro
 
-make -j$NPROC
-make  INSTALL_ROOT=$PKG install
+make
+make INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
@@ -99,7 +99,7 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 # Add a desktop file
-install -Dm644 $CWD/$PKGNAM.desktop $PKG/usr/share/applications/$PKGNAM.desktop
+install -Dm644 $CWD/files/$PKGNAM.desktop $PKG/usr/share/applications/$PKGNAM.desktop
 
 # Add an icon
 mkdir -p $PKG/usr/share/pixmaps

@@ -2,7 +2,7 @@
 #
 # Slackware build script for libx86emu
 #
-# Copyright 2015-2019 Corrado Franco (https://conraid.net)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=libx86emu
-VERSION=2.2
+VERSION=3.2
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -85,7 +85,7 @@ chmod -x git2log
 # Create VERSION file
 echo $VERSION > VERSION
 
-make -j$NPROC CFLAGS="$SLKCFLAGS"
+make CFLAGS="$SLKCFLAGS"
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

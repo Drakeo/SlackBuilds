@@ -2,7 +2,7 @@
 #
 # Slackware build script for scribus
 #
-# Copyright 2011-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2011-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 #
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=scribus
-VERSION=1.5.5
-BUILD=${BUILD:-2}
+VERSION=1.5.7
+BUILD=${BUILD:-6}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -77,6 +77,19 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
+# Apply patches
+if [ -e $CWD/patches ]; then
+  if [ -e $CWD/patches/series ]; then
+    for PATCH in $(cat $CWD/patches/series); do
+      patch -p1 -i $CWD/patches/$PATCH
+    done
+  else
+    for PATCH in $CWD/patches/*.patch; do
+      patch -p1 -i $PATCH
+    done
+  fi
+fi
+
 # Fix man path
 sed -e "s|CMAKE_INSTALL_DATAROOTDIR}/man/|CMAKE_INSTALL_PREFIX}/man/|g" \
     -e "s|CMAKE_INSTALL_DATAROOTDIR}/doc/\${MAIN_DIR_NAME}\${TAG_VERSION}/|CMAKE_INSTALL_PREFIX}/doc/\${MAIN_DIR_NAME}-$VERSION/|g" \
@@ -89,16 +102,20 @@ cd build
 cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_BUILD_TYPE=none \
+  -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
+  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
+  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-  -DRENDER_LIB=CAIRO \
   -DDOCDIR=/usr/doc/$PKGNAM-$VERSION \
   -DCMAKE_INSTALL_MANDIR=/usr/man \
   -Wno-dev \
+  -DHAVE_PYTHON=ON \
+	-DWANT_DISTROBUILD=ON \
+	-DPython3_EXECUTABLE="python3" \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install/strip
 cd ..
 

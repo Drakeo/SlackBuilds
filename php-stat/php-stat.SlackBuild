@@ -2,7 +2,7 @@
 #
 # Slackware build script for php-stat
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,13 +27,13 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=stat
 PKGNAM=php-$(echo $PRGNAM | tr A-Z a-z)
-SRCVERSION=cd1970f07bb6bec7967f5b025a4f85de67cac3fb
+SRCVERSION=eff23e7ce505920856290d80801f89519883c584
 VERSION=$(echo $SRCVERSION | head -c7)
-BUILD=${BUILD:-15}
+BUILD=${BUILD:-11}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -94,8 +94,8 @@ CFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
-make  INSTALL_ROOT=$PKG install
+make
+make INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
@@ -109,7 +109,7 @@ cat $CWD/$PKGNAM.SlackBuild > $PKG/usr/doc/$PKGNAM-$VERSION/$PKGNAM.SlackBuild
 
 # Make ini file
 mkdir -p $PKG/etc/php.d
-echo -e "zend_extension=stat.so\nstat.socket=/var/run/zend.stat.socket" > $PKG/etc/php.d/stat.ini.new
+cat $CWD/files/stat.ini > $PKG/etc/php.d/stat.ini.new
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

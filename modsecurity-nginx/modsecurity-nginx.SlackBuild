@@ -2,7 +2,7 @@
 #
 # Slackware build script for ModSecurity Apache module
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,14 +27,14 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=modsecurity-nginx
-SRCVERSION=v1.0.1
+SRCVERSION=v1.0.2
 VERSION=$(echo $SRCVERSION | tr - _ | sed 's/^v//')
-NGINXVERSION=1.19.0
-CRSVERSION=3.3.0
-BUILD=${BUILD:-3}
+NGINXVERSION=$(nginx -v 2>&1 | cut -d/ -f2)
+CRSVERSION=3.3.2
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -96,7 +96,7 @@ fi
   --with-compat \
   --add-dynamic-module=../$PKGNAM-$SRCVERSION
 
-make -j$NPROC modules
+make modules
 install -Dsm755 objs/ngx_http_modsecurity_module.so -t $PKG/usr/lib$LIBDIRSUFFIX/nginx/modules/
 
 cd ../$PKGNAM-$SRCVERSION

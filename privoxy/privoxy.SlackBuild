@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Slackware build script for <prgname> (http://www.privoxy.org/)
 #
 # Copyright (c) 2007  alkos333 <me@alkos333.net>
-# Copyright 2009-2018 Corrado Franco (http://conraid.net)
+# Copyright 2009-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
 
 set -eu
 
-CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=privoxy
-VERSION=3.0.26
-BUILD=${BUILD:-3}
+VERSION=3.0.32
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -55,6 +55,14 @@ if [ -z ${ARCH:=""} ]; then
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME:-""}" ]; then
+  echo "$PKGNAM-$VERSION-$ARCH-${BUILD}${TAG}.txz"
+  exit 0
 fi
 
 if [ "$ARCH" = "i586" ]; then
@@ -82,12 +90,12 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
 # Put the docs where we tell them to go.
-sed '/^DOC_DEST/s/= .*/= @docdir@/' -i GNUmake -j$NPROCfile.in
+sed '/^DOC_DEST/s/= .*/= @docdir@/' -i GNUmakefile.in
 
 # The Makefile checks if certain config files exist, and if so, adds a
 # .new suffix.  Turn this behavior off.  We will do it below.
 # Thanks to SBo
-sed 's|\[ -s "\$(CONF_DEST)/\$\$i" \]|false|' -i GNUmake -j$NPROCfile.in
+sed 's|\[ -s "\$(CONF_DEST)/\$\$i" \]|false|' -i GNUmakefile.in
 
 autoreconf
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
@@ -110,7 +118,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install-strip
 
 # Don't ship .la files:
@@ -118,6 +126,9 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 # Install init script
 install -Dm755 slackware/rc.privoxy $PKG/etc/rc.d/rc.privoxy.new
+
+# Use #!/bin/bash for init scripts
+sed 's;#!/bin/sh;#!/bin/bash;g' -i $PKG/etc/rc.d/*.new
 
 # Make .new files so we don't clobber the existing configuration.
 # Thanks to SBo

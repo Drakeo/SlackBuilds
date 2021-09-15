@@ -2,7 +2,7 @@
 #
 # Slackware build script for inkscape (http://inkscape.org)
 #
-# Copyright 2008-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2008-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,11 +25,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=inkscape
-VERSION=1.0
-BUILD=${BUILD:-1}
+VERSION=1.1
+BUILD=${BUILD:-5}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -78,10 +78,16 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
 # Apply patches
-if [ -e $CWD/patches/ ]; then
-  for PATCH in $CWD/patches/*.patch; do
-    patch -p1 -i $PATCH
-  done
+if [ -e $CWD/patches ]; then
+  if [ -e $CWD/patches/series ]; then
+    for PATCH in $(cat $CWD/patches/series); do
+      patch -p1 -i $CWD/patches/$PATCH
+    done
+  else
+    for PATCH in $CWD/patches/*.patch; do
+      patch -p1 -i $PATCH
+    done
+  fi
 fi
 
 # strip invalid tag
@@ -108,15 +114,14 @@ cmake -Wno-dev \
   -DENABLE_POPPLER=ON \
   -DENABLE_POPPLER_CAIRO=ON \
   -DWITH_DBUS=ON \
-  -DWITH_IMAGE_MAGICK=OFF \
-  -DWITH_GRAPHICS_MAGICK=ON \
   -DWITH_GTKSPELL=ON \
   -DWITH_JEMALLOC=ON \
   -DWITH_GRAPHICS_MAGICK:BOOL=ON \
   -DWITH_IMAGE_MAGICK:BOOL=OFF \
+  -DBUILD_SHARED_LIBS:BOOL=OFF \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

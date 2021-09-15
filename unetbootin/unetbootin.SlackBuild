@@ -2,7 +2,7 @@
 #
 # Slackware build script for unetbootin
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=unetbootin
-VERSION=681
+VERSION=702
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -85,10 +85,10 @@ chmod -R u+w,go+r-w,a+X-s .
 sed -i '/^RESOURCES/d' unetbootin.pro
 lupdate unetbootin.pro
 lrelease unetbootin.pro
-qmake -j$NPROC \
+qmake-qt5 \
 PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" \
 "DEFINES += NOSTATIC" "RESOURCES -= unetbootin.qrc"
-make -j$NPROC
+make
 
 install -Dsm755 $PKGNAM $PKG/usr/bin/unetbootin
 

@@ -2,7 +2,7 @@
 #
 # Slackware build script for nginx
 #
-# Copyright 2017-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2017-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -29,10 +29,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=nginx
-VERSION=1.19.1
+VERSION=1.21.3
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -96,7 +96,7 @@ sed -e '/root[ ]*html/s|html;|/var/www/&|' \
   --prefix=/usr \
   --sbin-path=/usr/sbin/nginx \
   --conf-path=/etc/nginx/nginx.conf \
-  --pid-path=/var/run/nginx.pid \
+  --pid-path=/run/nginx.pid \
   --lock-path=/var/lock/subsys \
   --modules-path=/usr/lib${LIBDIRSUFFIX}/nginx/modules \
   --user=nobody \
@@ -145,7 +145,7 @@ sed -e '/root[ ]*html/s|html;|/var/www/&|' \
   --with-stream=dynamic \
   --with-threads
 
-make -j$NPROC
+make
 make DESTDIR=$PKG INSTALLDIRS=vendor INSTALLVENDORMAN3DIR=/usr/man/man3 install
 
 # Don't ship .la files:
@@ -195,7 +195,7 @@ for i in $(find $PKG/etc/$PKGNAM -type f ! -name "*\.default"); do
 done
 
 # Install vim files
-for i in ftdetect indent syntax; do
+for i in ftdetect ftplugin indent syntax; do
 install -Dm644 contrib/vim/$i/nginx.vim $PKG/usr/share/vim/vimfiles/$i/nginx.vim
 done
 

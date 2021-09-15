@@ -2,7 +2,7 @@
 #
 # Slackware build script for LyX (http://www.lyx.org/)
 #
-# Copyright 2008-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2008-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=lyx
-SRCVERSION=2.3.5.2
-VERSION=2.3.5.2
-BUILD=${BUILD:-1}
+SRCVERSION=2.3.6.1
+VERSION=2.3.6.1
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -101,7 +101,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

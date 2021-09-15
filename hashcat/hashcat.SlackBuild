@@ -2,7 +2,7 @@
 #
 # Slackware build script for hashcat
 #
-# Copyright 2017-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2017-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=hashcat
-VERSION=6.0.0
-BUILD=${BUILD:-2}
+VERSION=6.2.4
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -89,8 +89,8 @@ MAKE_OPTIONS="PREFIX=/usr \
               USE_SYSTEM_OPENCL=1 \
               USE_SYSTEM_XXHASH=1"
 
-make -j$NPROC $MAKE_OPTIONS
-make -j$NPROC $MAKE_OPTIONS DESTDIR=$PKG install
+make $MAKE_OPTIONS
+make $MAKE_OPTIONS DESTDIR=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

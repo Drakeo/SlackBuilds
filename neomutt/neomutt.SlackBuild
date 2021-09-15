@@ -2,7 +2,7 @@
 #
 # Slackware build script for neomutt
 #
-# Copyright 2016-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2016-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=neomutt
-SRCVERSION=20200626
+SRCVERSION=20210205
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
@@ -85,8 +85,6 @@ if [ -e $CWD/patches/ ]; then
   done
 fi
 
-
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -115,7 +113,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

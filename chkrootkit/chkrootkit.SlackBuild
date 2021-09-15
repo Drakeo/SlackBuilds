@@ -2,7 +2,7 @@
 #
 # Slackware build script for chkrootkit (http://www.chkrootkit.org/)
 #
-# Copyright 2009-2020 Corrado Franco (https://conraid.net)
+# Copyright 2009-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=chkrootkit
-VERSION=0.53
+VERSION=0.55
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -78,9 +78,9 @@ chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
 
-make -j$NPROC CFLAGS="$SLKCFLAGS -DHAVE_LASTLOG_H"
+make CFLAGS="$SLKCFLAGS -DHAVE_LASTLOG_H"
 
-# Lets make -j$NPROC our own fancy make -j$NPROC install. Thanks to Michiel van Wessem
+# Lets make our own fancy make install. Thanks to Michiel van Wessem
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

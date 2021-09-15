@@ -2,7 +2,7 @@
 #
 # Slackware build script for apngasm
 #
-# Copyright 2018-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2018-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=apngasm
-VERSION=3.1.6
-BUILD=${BUILD:-7}
+SRCVERSION=de1c87cd7696384be3235eb07766766891474e09
+VERSION=$(echo $SRCVERSION | head -c7)
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -72,9 +73,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PKGNAM-$VERSION
-tar xvf $CWD/$PKGNAM-$VERSION.tar.gz || tar xvf $CWD/$VERSION.tar.gz
-cd $PKGNAM-$VERSION
+rm -rf $PKGNAM-$SRCVERSION
+tar xvf $CWD/$PKGNAM-$SRCVERSION.tar.gz || tar xvf $CWD/$SRCVERSION.tar.gz
+cd $PKGNAM-$SRCVERSION
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -88,7 +89,7 @@ cmake -Wno-dev \
   -DBoost_NO_BOOST_CMAKE=ON \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

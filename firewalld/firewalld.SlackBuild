@@ -2,7 +2,7 @@
 #
 # Slackware build script for firewalld
 #
-# Copyright 2017-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2017-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=firewalld
-VERSION=0.4.4.5
-BUILD=${BUILD:-4}
+VERSION=1.0.1
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -79,9 +79,20 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-sed 's/python -E/python3 -E/g' -i fix_python_shebang.sh
+# Apply patches
+if [ -e $CWD/patches ]; then
+  if [ -e $CWD/patches/series ]; then
+    for PATCH in $(cat $CWD/patches/series); do
+      patch -p1 -i $CWD/patches/$PATCH
+    done
+  else
+    for PATCH in $CWD/patches/*.patch; do
+      patch -p1 -i $PATCH
+    done
+  fi
+fi
 
-./autogen.sh
+NOCONFIGURE=true ./autogen.sh
 PYTHON="/usr/bin/python3" \
 LDFLAGS="-L/usr/lib$LIBDIRSUFFIX" \
 CFLAGS="$SLKCFLAGS" \
@@ -96,11 +107,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PKGNAM-$VERSION \
   --disable-schemas-compile \
   --disable-systemd \
+  --disable-docs \
   --with-bashcompletiondir=/etc/bash_completion.d/ \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:
@@ -112,7 +124,8 @@ find $PKG | xargs file | grep "current ar archive" | cut -f 1 -d : | xargs -r st
 for FILECONF in $(find $PKG/etc -name "*.conf"); do
   mv $FILECONF $FILECONF.new
 done
-mv $PKG/etc/sysconfig/firewalld $PKG/etc/sysconfig/firewalld.new
+mv $PKG/etc/default/firewalld $PKG/etc/default/firewalld.new
+mv $PKG/etc/logrotate.d/firewalld $PKG/etc/logrotate.d/firewalld.new
 
 # Add slackware init script
 mkdir -p $PKG/etc/rc.d

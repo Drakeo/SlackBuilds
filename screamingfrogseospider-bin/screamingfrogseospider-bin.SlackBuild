@@ -2,7 +2,7 @@
 #
 # Slackware build script for screamingfrogseospider
 #
-# Copyright 2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2020-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=screamingfrogseospider
 PKGNAM=screamingfrogseospider-bin
-VERSION=12.6
+VERSION=15.2
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -74,9 +74,6 @@ cd $PKG
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
-
-tar xvf $PKG/usr/share/$PRGNAM/tmp/jre${JRE}.tar.gz -C $PKG/usr/share/$PRGNAM
-rm -rf $PKG/usr/share/$PRGNAM/tmp
 
 mkdir -p $PKG/usr/man/man1
 mv $PKG/usr/share/man/man1/* $PKG/usr/man/man1

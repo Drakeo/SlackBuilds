@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=fontforge
-VERSION=20200314
-SRCFREETYPE=2.10.1 # Freetype version in -current
+VERSION=20201107
+SRCFREETYPE=$(freetype-config --ftversion) #Freetype version in -current
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -91,12 +91,19 @@ fi
 mkdir -p build
 cd build
 cmake -Wno-dev -GNinja \
-  -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
-  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
+  -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \
+  -DCMAKE_CXX_FLAGS_RELEASE="$SLKCFLAGS" \
+  -DCMAKE_SKIP_RPATH=ON \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
-  -DENABLE_X11=On \
+  -DENABLE_X11=ON \
+	-DENABLE_MAINTAINER_TOOLS=TRUE \
+	-DENABLE_FONTFORGE_EXTRAS=TRUE \
+	-DUNIX=TRUE \
   ..
+
+# fix -R linker
+sed 's|-R/usr|-Wl,-R/usr|g' -i *.*
 
 ninja
 DESTDIR=$PKG ninja install

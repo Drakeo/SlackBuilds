@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2006,2007 Eric Hameleers <alien@slackware.com>
 # Copyright (c) 2011-2018 Matteo Bernardini <ponce@slackbuilds.org>
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -45,11 +45,11 @@ elif ! grep ^clamav: /etc/group 2>&1 > /dev/null; then
   exit 1
 fi
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=clamav
-VERSION=0.102.3
-BUILD=${BUILD:-1}
+VERSION=0.104.0
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -114,19 +114,19 @@ sed \
   -e "s/^Example/#Example/" \
   -e "s/^\#LogSyslog/LogSyslog/" \
   -e "s/^\#LogFacility/LogFacility/" \
-  -e "s/^\#PidFile.*/PidFile \/var\/run\/clamav\/freshclam.pid/" \
-  -e "s/^\#UpdateLogFile.*/UpdateLogFile \/var\/log\/clamav\/freshclam.log/" \
+  -e "s|^\#PidFile.*|PidFile /run/clamav/freshclam.pid|" \
+  -e "s|^\#UpdateLogFile.*|UpdateLogFile /var/log/clamav/freshclam.log|" \
   -e "s/^\#AllowSupplementaryGroups.*/AllowSupplementaryGroups yes/" \
   -e "s/^\#DatabaseOwner.*/DatabaseOwner clamav/" \
-  -e "s/^\#NotifyClamd.*/NotifyClamd \/etc\/clamd.conf/" \
+  -e "s|^\#NotifyClamd.*|NotifyClamd /etc/clamd.conf|" \
   -i etc/freshclam.conf.sample
 sed \
   -e "s/^Example/#Example/" \
   -e "s/^\#LogSyslog/LogSyslog/" \
   -e "s/^\#LogFacility/LogFacility/" \
-  -e "s/^\#LogFile\ .*/LogFile \/var\/log\/clamav\/clamd.log/" \
-  -e "s/^\#PidFile.*/PidFile \/var\/run\/clamav\/clamd.pid/" \
-  -e "s/^\#LocalSocket\ .*/LocalSocket \/var\/run\/clamav\/clamd.socket/" \
+  -e "s|^\#LogFile\ .*|LogFile /var/log/clamav/clamd.log|" \
+  -e "s|^\#PidFile.*|PidFile /run/clamav/clamd.pid|" \
+  -e "s|^\#LocalSocket\ .*|LocalSocket /run/clamav/clamd.socket|" \
   -e "s/^\#LocalSocketGroup.*/LocalSocketGroup clamav/" \
   -e "s/^\#LocalSocketMode/LocalSocketMode/" \
   -e "s/^\#FixStaleSocket/FixStaleSocket/" \
@@ -135,32 +135,46 @@ sed \
   -e "s/^\#ExitOnOOM/ExitOnOOM/" \
   -i etc/clamd.conf.sample
 
-autoreconf -fi
+mkdir -p build
+cd build
+cmake -Wno-dev -GNinja \
+  -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
+  -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG" \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+  -DAPP_CONFIG_DIRECTORY=/etc \
+  -DCMAKE_INSTALL_DOCDIR=/usr/doc/$PKGNAM-$VERSION \
+  -DCMAKE_INSTALL_MANDIR=/usr/man \
+  -DENABLE_ALL_THE_WARNINGS=OFF \
+  -DENABLE_APP=ON \
+  -DENABLE_CLAMONACC=ON \
+  -DENABLE_DEBUG=OFF \
+  -DENABLE_DOXYGEN=OFF \
+  -DENABLE_EXAMPLES=OFF \
+  -DENABLE_EXPERIMENTAL=ON \
+  -DENABLE_EXTERNAL_MSPACK=OFF \
+  -DENABLE_FRESHCLAM_DNS_FIX=OFF \
+  -DENABLE_FRESHCLAM_NO_CACHE=OFF \
+  -DENABLE_FUZZ=OFF \
+  -DENABLE_JSON_SHARED=OFF \
+  -DJSONC_INCLUDE_DIR=/usr/include/json-c \
+  -DJSONC_LIBRARY=/usr/lib64/libjson-c.a \
+  -DENABLE_LIBCLAMAV_ONLY=OFF \
+  -DENABLE_MAN_PAGES=ON \
+  -DENABLE_MILTER=ON \
+  -DENABLE_SHARED_LIB=ON \
+  -DENABLE_STATIC_LIB=OFF \
+  -DENABLE_STRN_INTERNAL=OFF \
+  -DENABLE_SYSTEMD=OFF \
+  -DENABLE_TESTS=OFF \
+  -DENABLE_UNRAR=ON \
+  -DENABLE_WERROR=OFF \
+  ..
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc/clamav \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --infodir=/usr/info \
-  --docdir=/usr/doc/$PKGNAM-$VERSION \
-  --enable-static=no \
-  --enable-shared=yes \
-  --enable-clamdtop \
-  --enable-experimental \
-  --enable-id-check \
-  --with-dbdir=/var/lib/clamav \
-  --with-libjson \
-  --disable-zlib-check \
-  --disable-llvm \
-  --host=$ARCH-slackware-linux \
-  --build=$ARCH-slackware-linux
-
-make -j$NPROC
-make DESTDIR=$PKG install
+ninja
+DESTDIR=$PKG ninja install
+cd ..
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
@@ -174,15 +188,17 @@ if [ -d $PKG/usr/man ]; then
 fi
 
 # Prepare the config files:
-rename .sample .new $PKG/etc/clamav/*.sample
+rename .sample .new $PKG/etc/*.sample
 
 # Install rc script and logrotate entry
 install -Dm755 $CWD/files/rc.clamav $PKG/etc/rc.d/rc.clamav.new
 install -Dm644 $CWD/files/logrotate.clamav $PKG/etc/logrotate.d/clamav.new
 
 # Create directories and files for pid, socket, db, and log.
-mkdir -p $PKG/var/{lib,log,run}/clamav/
-chown clamav:clamav $PKG/var/{lib,log,run}/clamav/
+mkdir -p $PKG/var/{lib,log}/clamav/
+mkdir -p $PKG/run/clamav/
+chown clamav:clamav $PKG/var/{lib,log}/clamav/
+chown clamav:clamav $PKG/run/clamav/
 touch $PKG/var/log/clamav/{clamd,freshclam}.log.new
 
 # Fixup some ownership and permissions issues
@@ -199,7 +215,7 @@ chmod 660 $PKG/var/log/clamav/clamd.log.new \
   $PKG/var/log/clamav/freshclam.log.new
 
 chown -R clamav:clamav $PKG/var/lib/clamav $PKG/var/log/clamav \
-  $PKG/var/run/clamav
+  $PKG/run/clamav
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION
 cp -a $DOCFILES $PKG/usr/doc/$PKGNAM-$VERSION || true

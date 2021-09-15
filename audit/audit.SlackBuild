@@ -2,7 +2,7 @@
 #
 # Slackware build script for audit
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=audit
-VERSION=2.8.5
-BUILD=${BUILD:-4}
+VERSION=3.0.5
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -79,8 +79,8 @@ cd $PKGNAM-$VERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
+CFLAGS="$SLKCFLAGS -fcommon" \
+CXXFLAGS="$SLKCFLAGS -fcommon" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
@@ -98,7 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:
@@ -114,6 +114,9 @@ fi
 
 # Move init file
 mv $PKG/etc/rc.d/init.d/auditd $PKG/etc/rc.d/rc.auditd.new
+
+# Use #!/bin/bash for init scripts
+sed 's;#!/bin/sh;#!/bin/bash;g' -i $PKG/etc/rc.d/*.new
 
 # Rename config file
 for CONF in $(find $PKG/etc -name "*.rules" -o -name "*.conf"); do

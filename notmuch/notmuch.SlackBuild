@@ -2,7 +2,7 @@
 #
 # Slackware build script for notmuch
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=notmuch
-VERSION=0.30
+VERSION=0.33.1
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -92,12 +92,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Install ruby bindings
 sed 's|INSTALL = .*[^D]$|& -D|' -i bindings/ruby/Makefile
-make -j$NPROC -C bindings/ruby exec_prefix=$PKG/usr prefix=/usr install
+make -C bindings/ruby exec_prefix=$PKG/usr prefix=/usr install
 
 # Install python bindings
 cd bindings/python
@@ -108,10 +108,10 @@ cd -
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 # Install vim plugin
-make -j$NPROC -C vim DESTDIR=$PKG prefix="/usr/share/vim/vimfiles" install
+make -C vim DESTDIR=$PKG prefix="/usr/share/vim/vimfiles" install
 
 # Install mutt script (required some perl scripts at runtime)
-make -j$NPROC -C contrib/notmuch-mutt
+make -C contrib/notmuch-mutt
 install -Dm644 contrib/notmuch-mutt/notmuch-mutt.1 $PKG/usr/man/man1/notmuch-mutt.1
 install -Dm755 contrib/notmuch-mutt/notmuch-mutt $PKG/usr/bin/notmuch-mutt
 

@@ -2,7 +2,7 @@
 #
 # Slackware build script for nghttp2
 #
-# Copyright 2016-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2016-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nghttp2
 PKGNAM=nghttp2-app
-VERSION=1.40.0 # Same version of the Slackware package nghttp2.
+VERSION=1.44.0 # Same version of the Slackware package nghttp2.
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -100,9 +100,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
-make -j$NPROC -C lib DESTDIR=$PKG uninstall
+make -C lib DESTDIR=$PKG uninstall
 
 # Remove empty dir and dir exists in slackware package
 rm -rf $PKG/usr/{include,lib*,share}

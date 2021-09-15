@@ -2,7 +2,7 @@
 #
 # Slackware build script for qt5ct
 #
-# Copyright 2017-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2017-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=qt5ct
-VERSION=0.38
+VERSION=1.3
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -81,8 +81,8 @@ chmod -R u+w,go+r-w,a+X-s .
 
 qmake-qt5 PREFIX=/usr QMAKE_CFLAGS="" QMAKE_CXXFLAGS="" QMAKE_CFLAGS_RELEASE="$SLKCFLAGS" QMAKE_CXXFLAGS_RELEASE="$SLKCFLAGS" -o Makefile $PKGNAM.pro
 
-make -j$NPROC
-make  INSTALL_ROOT=$PKG install
+make
+make INSTALL_ROOT=$PKG install
 
 
 # Don't ship .la files:

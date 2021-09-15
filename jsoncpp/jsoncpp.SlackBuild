@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=jsoncpp
-VERSION=1.9.3
+VERSION=1.9.4
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -95,7 +95,7 @@ cmake -Wno-dev \
   -DCMAKE_INSTALL_INCLUDEDIR="/usr/include/$PKGNAM" \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

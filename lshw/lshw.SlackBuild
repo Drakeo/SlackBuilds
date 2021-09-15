@@ -25,7 +25,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=lshw
 VERSION=B.02.19.2
@@ -80,13 +80,13 @@ chmod -R u+w,go+r-w,a-s .
 # Fix the MANDIR variable
 sed 's|MANDIR=\$(PREFIX)/share/man|MANDIR=$(PREFIX)/man|' -i src/Makefile
 
-RPM_OPT_FLAGS="$SLKCFLAGS" make -j$NPROC
-RPM_OPT_FLAGS="$SLKCFLAGS" make -j$NPROC gui
+RPM_OPT_FLAGS="$SLKCFLAGS" make
+RPM_OPT_FLAGS="$SLKCFLAGS" make gui
 make install DESTDIR=$PKG
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
-make -j$NPROC install-gui DESTDIR=$PKG 
+make install-gui DESTDIR=$PKG 
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

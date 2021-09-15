@@ -2,7 +2,7 @@
 #
 # Slackware build script for x264
 #
-# Copyright 2018-2019 Corrado Franco (https://conraid.net)
+# Copyright 2018-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=x264
-VERSION=20180720
-BUILD=${BUILD:-2}
+SRCVERSION=ae03d92b52bb7581df2e75d571989cb1ecd19cbd
+VERSION=$(echo $SRCVERSION | head -c7)
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -72,9 +73,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PKGNAM-snapshot-$VERSION-2245-stable
-tar xvf $CWD/$PKGNAM-snapshot-$VERSION-2245-stable.tar.bz2
-cd $PKGNAM-snapshot-$VERSION-2245-stable
+rm -rf $PKGNAM-$SRCVERSION
+tar xvf $CWD/$PKGNAM-$SRCVERSION.tar.bz2
+cd $PKGNAM-$SRCVERSION
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -96,7 +97,7 @@ for BIT in 8 10; do
   --enable-strip \
   --host=$ARCH-slackware-linux
 
-  make -j$NPROC
+  make
   make DESTDIR=$PKG install
   mv $PKG/usr/bin/x264{,-$BIT}
   mv $PKG/usr/lib$LIBDIRSUFFIX/libx264.so.${_ver} $PKG/usr/lib$LIBDIRSUFFIX/libx264-${BIT}.so.${_ver}

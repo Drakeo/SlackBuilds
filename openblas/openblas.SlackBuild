@@ -2,7 +2,7 @@
 #
 # Slackware build script for openblas
 #
-# Copyright 2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2020-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenBLAS
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
-VERSION=0.3.10
+VERSION=0.3.17
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -104,12 +104,12 @@ PARAMS="NO_STATIC=1 \
   OPENBLAS_LIBRARY_DIR=/usr/lib$LIBDIRSUFFIX \
   PREFIX=/usr"
 
-make -j$NPROC \
+make \
   MAKE_NB_JOBS="$(($(nproc)+1))" \
   CFLAGS="$SLKCFLAGS" \
   $PARAMS
 
-make -j$NPROC \
+make \
   DESTDIR=$PKG \
   $PARAMS \
   install

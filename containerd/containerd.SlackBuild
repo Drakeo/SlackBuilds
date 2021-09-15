@@ -2,7 +2,7 @@
 #
 # Slackware build script for containerd
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=containerd
-VERSION=1.3.6
-COMMIT=be75852b8d7849474a20192f9ed1bf34fdd454f1
+VERSION=1.5.5
+COMMIT=4a4bb851f5da563ff6e68a83dc837c7699c469ad
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -102,7 +102,7 @@ export PATH="${GOROOT}/bin:${PATH}"
 export GOFLAGS="-trimpath"
 export GOPATH=$TMP/$PKGNAM-$VERSION/build
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

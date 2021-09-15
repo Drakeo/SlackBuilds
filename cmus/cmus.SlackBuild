@@ -2,7 +2,7 @@
 #
 # Slackware build script for cmus (http://cmus.sourceforge.net/)
 #
-# Copyright 2009-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2009-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=cmus
-SRCVERSION=2.8.0
+SRCVERSION=2.9.1
 VERSION=$(echo $SRCVERSION | tr - _)
-BUILD=${BUILD:-4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -88,7 +88,7 @@ CXXFLAGS="$SLKCFLAGS" \
   exampledir="/usr/doc/$PKGNAM-$VERSION/examples" \
   DEBUG=0
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

@@ -12,5 +12,5 @@ Multiple Master, and many other formats.
 HOME: http://fontforge.github.io
 
 ======================================================================
-REQUIRES: woof2 brotli libspiro libuninameslist
+REQUIRES: libspiro libuninameslist
 

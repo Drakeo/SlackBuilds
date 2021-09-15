@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Slackware build script for sslh
 #
-# Copyright 2013-2018 Corrado Franco (http://conraid.net)
+# Copyright 2013-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 #
 set -eu
 
-CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=sslh
-VERSION=1.20
+VERSION=1.22c
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -45,6 +45,14 @@ if [ -z ${ARCH:=""} ]; then
     arm*) ARCH=arm ;;
     *) ARCH=$( uname -m ) ;;
   esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME:-""}" ]; then
+  echo "$PKGNAM-$VERSION-$ARCH-${BUILD}${TAG}.txz"
+  exit 0
 fi
 
 if [ "$ARCH" = "i586" ]; then
@@ -74,7 +82,7 @@ chmod -R u+w,go+r-w,a-s .
 # Fix slackware path in manpage
 sed 's|/init.d/sslh|/rc.d/rc.sslh|' -i sslh.pod
 
-make -j$NPROC LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
+make LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" CFLAGS="$SLKCFLAGS"
 install -Dsm755 sslh-fork $PKG/usr/sbin/sslh-fork
 install -Dsm755 sslh-select $PKG/usr/sbin/sslh-select
 ln -s sslh-fork $PKG/usr/sbin/sslh
@@ -85,9 +93,9 @@ install -Dm644 sslh.8.gz $PKG/usr/man/man8/sslh.8.gz
 install -Dm755 $CWD/rc.sslh $PKG/etc/rc.d/rc.sslh.new
 
 # Install config files
-sed 's#/var/run/#/var/run/sslh/#' -i *.cfg
+sed 's#/var/run/#/run/sslh/#' -i *.cfg
 install -Dm644 basic.cfg $PKG/etc/default/sslh.new
-install -d -g nobody -o nobody $PKG/var/run/sslh
+install -d -g nobody -o nobody $PKG/run/sslh
 
 mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION
 cp -a $DOCFILES $PKG/usr/doc/$PKGNAM-$VERSION

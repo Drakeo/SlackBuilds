@@ -2,7 +2,7 @@
 #
 # Slackware build script for sslscan
 #
-# Copyright 2008-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2008-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=sslscan
-SRCVERSION=2.0.0-beta4
+SRCVERSION=2.0.10
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
@@ -78,7 +78,7 @@ cd $PKGNAM-$SRCVERSION
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
 
-make -j$NPROC CFLAGS="$SLKCFLAGS -I/usr/include/openssl" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX} -lssl -lcrypto"
+make CFLAGS="$SLKCFLAGS -I/usr/include/openssl" LDFLAGS="-L/usr/lib${LIBDIRSUFFIX} -lssl -lcrypto"
 make DESTDIR=$PKG MANDIR=/usr/man install
 
 # Don't ship .la files:

@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bcrypt
 PKGNAM=python-$(echo $PRGNAM | tr A-Z a-z)
-SRCVERSION=3.1.7
+SRCVERSION=3.2.0
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-3}
 TAG=${TAG:-cf}

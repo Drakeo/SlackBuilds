@@ -27,18 +27,18 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=wol_qt
 VERSION=2.4
 LINETVERSION=1.4
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-DOCFILES="AUTHORS BUGS CHANGES COPYING* COPYRIGHT ChangeLog INSTALL LICENSE MANIFEST NEWS README* THANKS TODO VERSION"
+DOCFILES="*.md"
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in
@@ -103,7 +103,7 @@ cmake -Wno-dev \
   -DCMAKE_INSTALL_PREFIX=/usr \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

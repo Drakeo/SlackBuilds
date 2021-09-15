@@ -24,13 +24,13 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=john
 PKGNAM=john
 SRCVERSION=1.9.0-jumbo-1
 VERSION=$(echo $SRCVERSION | tr - _)
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-5}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -90,19 +90,19 @@ cd src
 if [[ "$ARCH" == "x86_64" ]]; then
   LIBDIRSUFFIX="64"
   if grep -q '^flags.* avx' /proc/cpuinfo; then
-    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-avx
   fi
 
   if grep -q "^flags.* xop" /proc/cpuinfo; then
-    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-xop
   fi
 
-    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john
 
     install -Dm755 $CWD/files/john-64.sh $PKG/usr/bin/john
@@ -110,31 +110,31 @@ elif [[ "$ARCH" == "x86" ]]; then
   LIBDIRSUFFIX=""
 
   if grep -q "^flags.* avx" /proc/cpuinfo; then
-    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-avx
   fi
 
   if grep -q "^flags.* xop" /proc/cpuinfo; then
-    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure "$SLKCONF" CFLAGS="$SLKCFLAGS -fPIC -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-xop
   fi
 
   if grep -q "^flags.* sse2" /proc/cpuinfo; then
-    ./configure $SLKCONF CFLAGS="$SLKCFLAGS -msse2"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure $SLKCONF CFLAGS="$SLKCFLAGS -msse2 -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-sse2
   fi
 
   if grep -q "^flags.* mmx" /proc/cpuinfo; then
-    ./configure $SLKCONF CFLAGS="$SLKCFLAGS -mmmx"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure $SLKCONF CFLAGS="$SLKCFLAGS -mmmx -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john-mmx
   fi
 
-    ./configure $SLKCONF CFLAGS="$SLKCFLAGS"
-    make -j$NPROC clean; make -j$NPROC
+    ./configure $SLKCONF CFLAGS="$SLKCFLAGS -fcommon"
+    make clean; make
     install -Dsm755 ../run/john $PKG/usr/libexec/john/john
 
     install -Dm755 $CWD/files/john.sh $PKG/usr/bin/john

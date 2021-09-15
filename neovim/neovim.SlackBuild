@@ -2,7 +2,7 @@
 #
 # Slackware build script for neovim
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=neovim
-COMMIT=74fed7d50fc80fd9889a09812329e0c281bfde52
-VERSION=0.5.0_$(echo $COMMIT | head -c7)
+VERSION=0.5.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -73,9 +72,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PKGNAM-$COMMIT
-tar xvf $CWD/$PKGNAM-$COMMIT.tar.gz || tar xvf $CWD/$COMMIT.tar.gz
-cd $PKGNAM-$COMMIT
+rm -rf $PKGNAM-$VERSION
+tar xvf $CWD/$PKGNAM-$VERSION.tar.gz || tar xvf $CWD/$VERSION.tar.gz
+cd $PKGNAM-$VERSION
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -114,6 +113,7 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 
 install -Dm644 runtime/nvim.desktop $PKG/usr/share/applications/nvim.desktop
 install -Dm644 runtime/nvim.png $PKG/usr/share/pixmaps/nvim.png
+install -Dm644 runtime/nvim.appdata.xml $PKG/usr/share/metainfo/nvim.appdata.xml
 
 # Add vim runtimepath to neovim
 echo "set runtimepath+=/usr/share/vim/vimfiles" > $PKG/usr/share/nvim/slackers.vim

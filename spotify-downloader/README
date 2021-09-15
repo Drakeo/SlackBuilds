@@ -7,8 +7,8 @@ spotify-downloader (Download Spotify playlists)
 
 Download Spotify playlists with albumart and meta-tags
 
-HOME: https://github.com/ritiek/spotify-downloader
+HOME: https://github.com/spotDL/spotify-downloader
 
 ======================================================================
-REQUIRES: eyed3 mutagen python-magic python-pafy python-pathlib python-spotipy python-titlecase unicode-slugify youtube-dl pyyaml python-lyricwikia python-logzero
+REQUIRES: python-spotipy mutagen pytube3 python-tqdm python-rapidfuzz
 

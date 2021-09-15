@@ -2,7 +2,7 @@
 #
 # Slackware build script for libopenshot-audio
 #
-# Copyright 2019-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2019-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=libopenshot-audio
-VERSION=0.2.0
+VERSION=0.2.2
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -94,7 +94,7 @@ cmake -Wno-dev \
   -DCMAKE_INSTALL_PREFIX=/usr \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 cd ..
 

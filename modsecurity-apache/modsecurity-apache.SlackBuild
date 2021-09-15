@@ -2,7 +2,7 @@
 #
 # Slackware build script for ModSecurity Apache module
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,13 +27,13 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=modsecurity-apache
 SRCVERSION=v0.0.9-beta1
 VERSION=$(echo $SRCVERSION | tr - _ | sed 's/^v//')
-CRSVERSION=3.3.0
-BUILD=${BUILD:-4}
+CRSVERSION=3.3.2
+BUILD=${BUILD:-9}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -105,7 +105,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 install -Dsm755 src/.libs/mod_security3.so $PKG/usr/lib$LIBDIRSUFFIX/httpd/modules/mod_security3.so
 
 # Add conf files

@@ -2,7 +2,7 @@
 #
 # Slackware build script for nativefier
 #
-# Copyright 2018-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2018-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nativefier
 PKGNAM=node-$(echo $PRGNAM | tr A-Z a-z)
-VERSION=9.0.0
+VERSION=45.0.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -63,6 +63,7 @@ mkdir -p $TMP $PKG $OUTPUT
 
 chmod -R u+w,go+r-w,a+X-s .
 
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX
 DESTDIR=$PKG npm install --user root -g --prefix $PKG/usr $CWD/$PRGNAM-$VERSION.tgz
 
 # Remove empty dir

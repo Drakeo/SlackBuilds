@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Slackware build script for ladspa
 #
-# Copyright 2018 Corrado Franco (http://conraid.net)
+# Copyright 2018-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=ladspa_sdk
-VERSION=1.13
+VERSION=1.17
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -45,6 +45,14 @@ if [ -z ${ARCH:=""} ]; then
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME:-""}" ]; then
+  echo "$PKGNAM-$VERSION-$ARCH-${BUILD}${TAG}.txz"
+  exit 0
 fi
 
 if [ "$ARCH" = "i586" ]; then
@@ -64,9 +72,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PKGNAM
+rm -rf ${PKGNAM}_${VERSION}
 tar xvf $CWD/${PKGNAM}_${VERSION}.tgz
-cd $PKGNAM
+cd ${PKGNAM}_${VERSION}
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
@@ -78,13 +86,13 @@ if [ -e $CWD/patches ]; then
   done
 fi
 
-make -j$NPROC \
+make \
     CFLAGS="$SLKCFLAGS -I. -Wall -Werror -fPIC" \
     INSTALL_PLUGINS_DIR="/usr/lib${LIBDIRSUFFIX}/ladspa" \
     INSTALL_BINARY_DIR="/usr/bin" \
     -C src
 
-make -j$NPROC install \
+make install \
     INSTALL_PLUGINS_DIR="$PKG/usr/lib${LIBDIRSUFFIX}/ladspa" \
     INSTALL_BINARY_DIR="$PKG/usr/bin" \
     INSTALL_INCLUDE_DIR="$PKG/usr/include" \
@@ -102,12 +110,12 @@ if [ -d $PKG/usr/man ]; then
 fi
 
 mkdir -p $PKG/etc/profile.d/
-cat << EOF > $PKG/etc/profile.d/ladspa.csh
+cat << EOF > $PKG/etc/profile.d/ladspa.csh.new
 #!/bin/csh
 setenv LADSPA_PATH /usr/lib${LIBDIRSUFFIX}/ladspa
 EOF
-cat << EOF > $PKG/etc/profile.d/ladspa.sh
-#!/bin/sh
+cat << EOF > $PKG/etc/profile.d/ladspa.sh.new
+#!/bin/bash
 export LADSPA_PATH=/usr/lib${LIBDIRSUFFIX}/ladspa
 EOF
 chmod 0755 $PKG/etc/profile.d/*
@@ -120,7 +128,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-# Cleanup files left in /tmp by make -j$NPROC
+# Cleanup files left in /tmp by make
 rm -f /tmp/test.wav || true
 
 cd $PKG

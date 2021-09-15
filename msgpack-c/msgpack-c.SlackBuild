@@ -2,7 +2,7 @@
 #
 # Slackware build script for msgpack-c
 #
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=msgpack
 PKGNAM=msgpack-c
@@ -96,9 +96,11 @@ cmake -Wno-dev \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
   -DMSGPACK_BUILD_EXAMPLES=NO \
+  -DBUILD_SHARED_LIBS=ON \
+  -DMSGPACK_CXX17=ON \
   ..
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 # Don't ship .la files:

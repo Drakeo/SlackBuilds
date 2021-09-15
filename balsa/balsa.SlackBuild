@@ -2,7 +2,7 @@
 #
 # Slackware build script for Balsa
 #
-# Copyright 2011-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2011-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=balsa
-VERSION=2.6.1
+VERSION=2.6.3
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -71,7 +71,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PKGNAM-$VERSION
-tar xvf $CWD/$PKGNAM-$VERSION.tar.bz2
+tar xvf $CWD/$PKGNAM-$VERSION.tar.xz
 cd $PKGNAM-$VERSION
 
 chown -R root:root .
@@ -111,10 +111,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-libsecret \
   --with-ldap \
   --with-html-widget=webkit2 \
+  --with-spell-checker=gtkspell \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
+make
 make DESTDIR=$PKG install
 
 

@@ -2,7 +2,7 @@
 #
 # Slackware build script for sqlmap
 #
-# Copyright 2016-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2016-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=sqlmap
-VERSION=1.4.3
+VERSION=1.5.9
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -75,7 +75,7 @@ mkdir -p $PKG/usr/share/$PKGNAM $PKG/etc $PKG/usr/bin $PKG/usr/doc/
 cat << EOF > $PKG/usr/bin/$PKGNAM
 #!/bin/bash
 cd /usr/share/$PKGNAM
-python sqlmap.py "\$@"
+python3 sqlmap.py "\$@"
 EOF
 chmod 755 $PKG/usr/bin/$PKGNAM
 

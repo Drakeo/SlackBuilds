@@ -2,7 +2,7 @@
 #
 # Slackware build script for php-msgpack
 #
-# Copyright 2018-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2018-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,13 +27,13 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=msgpack
 PKGNAM=php-$PRGNAM
-VERSION=2.1.0
+VERSION=2.1.2
 VERSION=$(echo $VERSION | tr - _)
-BUILD=${BUILD:-6}
+BUILD=${BUILD:-10}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -94,8 +94,8 @@ CFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC
-make  INSTALL_ROOT=$PKG install
+make
+make INSTALL_ROOT=$PKG install
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

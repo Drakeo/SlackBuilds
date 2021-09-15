@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Slackware build script for qemu
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,12 +26,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=qemu
-SRCVERSION=5.0.0
+SRCVERSION=6.1.0
 VERSION=$(echo $SRCVERSION | tr - _)
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -142,12 +142,14 @@ ARFLAGS="rv" \
   --enable-fdt \
   --enable-libnfs \
   --enable-xfsctl \
-  --audio-drv-list="alsa,sdl,pa" \
+  --enable-linux-io-uring \
+  --enable-plugins \
+  --audio-drv-list="alsa sdl pa" \
   --target-list="x86_64-softmmu,x86_64-linux-user"
 
-make -j$NPROC config-all-devices.mak config-all-disas.mak
-make -j$NPROC V=1
-make DESTDIR=$PKG install
+make
+make DESTDIR="$PKG" install
+cd ..
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

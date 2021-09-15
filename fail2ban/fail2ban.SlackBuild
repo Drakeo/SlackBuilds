@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2008-2015, Nishant Limbachia, Hoffman Estates, IL, USA
 # <nishant _AT_ mnspace _DOT_ net>
-# Copyright 2015-2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2015-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -29,11 +29,11 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=fail2ban
-VERSION=0.11.1
-BUILD=${BUILD:-2}
+VERSION=0.11.2
+BUILD=${BUILD:-3}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
@@ -109,8 +109,8 @@ rm -f $PKG/etc/fail2ban/paths-{debian,fedora,freebsd,osx}.conf.new
 # install logrotate script
 install -Dm644 $CWD/files/fail2ban.logrotate $PKG/etc/logrotate.d/fail2ban.new
 
-# make -j$NPROC directory for socket, pid file & db file
-mkdir -p $PKG/var/{run,lib}/fail2ban
+# make directory for socket, pid file & db file
+mkdir -p $PKG/{var/lib,run}/fail2ban
 
 # Install bash completion
 install -Dm644 files/bash-completion $PKG/etc/bash_completion.d/fail2ban

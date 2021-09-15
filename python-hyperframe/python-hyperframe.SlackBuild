@@ -27,12 +27,12 @@
 
 set -eu
 
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=hyperframe
 PKGNAM=python-$(echo $PRGNAM | tr A-Z a-z)
-VERSION=5.2.0
-BUILD=${BUILD:-1}
+VERSION=6.0.0
+BUILD=${BUILD:-3}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM

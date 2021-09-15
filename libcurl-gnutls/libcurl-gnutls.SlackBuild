@@ -2,7 +2,7 @@
 #
 # Slackware build script for libcurl-gnutls
 #
-# Copyright 2020 Corrado Franco (https://corradofranco.it)
+# Copyright 2020-2021 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
 # Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 set -eu
-cd $(dirname $0) ; CWD=$(pwd) ; NPROC=$(nproc)
+cd $(dirname $0) ; CWD=$(pwd)
 
 PKGNAM=libcurl-gnutls
 PRGNAM=curl
-VERSION=7.70.0 # This is the version in Slackware current
+VERSION=7.78.0 # This is the version in Slackware current
 BUILD=${BUILD:-1}
 TAG=${TAG:-cf}
 TMP=${TMP:-/tmp/pkg}
@@ -101,13 +101,15 @@ CXXFLAGS="$SLKCFLAGS" \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux
 
-make -j$NPROC -C lib
-make -j$NPROC -C lib DESTDIR=$PKG install
+make -C lib
+make -C lib DESTDIR=$PKG install
 
-mv ${PKG}/usr/lib${LIBDIRSUFFIX}/libcurl{,-gnutls}.so.4.6.0
+CURLLIB=$(echo $PKG/usr/lib$LIBDIRSUFFIX/libcurl.so.4.?.? | cut -d. -f3-)
+
+mv ${PKG}/usr/lib${LIBDIRSUFFIX}/libcurl{,-gnutls}.so.$CURLLIB
 rm ${PKG}/usr/lib${LIBDIRSUFFIX}/libcurl.so*
-for VERSIONLIB in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0; do
-  ln -s libcurl-gnutls.so.4.6.0 $PKG/usr/lib${LIBDIRSUFFIX}/libcurl-gnutls.so.${VERSIONLIB}
+for VERSIONLIB in 3 4 4.0.0 4.1.0 4.2.0 4.3.0 4.4.0 4.5.0 4.6.0; do
+  ln -s libcurl-gnutls.so.$CURLLIB $PKG/usr/lib${LIBDIRSUFFIX}/libcurl-gnutls.so.${VERSIONLIB}
 done
 
 # Don't ship .la files:
