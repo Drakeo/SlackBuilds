@@ -37,10 +37,10 @@ PKGNAM=lua51
 VERSION=5.1.5
 MAINVERSION=$(echo $VERSION | cut -d. -f-2)
 BUILD=${BUILD:-7}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="README doc/*"
 

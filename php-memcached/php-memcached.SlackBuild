@@ -32,10 +32,10 @@ PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
 SRCVERSION=fc33513d32504843fe0864f9855d3a0b37a76ddc
 VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-12}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CREDITS ChangeLog LICENSE README* memcached.ini"
 

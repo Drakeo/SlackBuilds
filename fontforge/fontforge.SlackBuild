@@ -33,10 +33,10 @@ PKGNAM=fontforge
 VERSION=20201107
 SRCFREETYPE=$(freetype-config --ftversion) #Freetype version in -current
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS CONTRIBUTING* COPYING* INSTALL* LICENSE README*"
 

@@ -30,10 +30,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=wput
 VERSION=0.6.2
 BUILD=${BUILD:-6}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="ABOUT-NLS COPYING ChangeLog INSTALL TODO doc/USAGE* doc/passwordfile doc/wputrc"
 

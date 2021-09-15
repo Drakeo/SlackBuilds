@@ -33,10 +33,10 @@ PKGNAM=rtmpdump
 COMMIT=f1b83c1
 VERSION=2.4_$COMMIT
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING ChangeLog README"
 

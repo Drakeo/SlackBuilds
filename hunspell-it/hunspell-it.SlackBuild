@@ -34,10 +34,10 @@ PKGNAM=hunspell-it
 SRCVERSION=2_4_2007_09_01
 VERSION=2.4
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.txt *AUTHORS *COPYING *ChangeLog *README*"
 

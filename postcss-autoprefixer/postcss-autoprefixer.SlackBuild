@@ -33,10 +33,10 @@ PRGNAM=autoprefixer
 PKGNAM=postcss-autoprefixer
 VERSION=10.3.4
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.md LICENSE"
 

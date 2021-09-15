@@ -34,10 +34,10 @@ SRCVERSION=v0.0.9-beta1
 VERSION=$(echo $SRCVERSION | tr - _ | sed 's/^v//')
 CRSVERSION=3.3.2
 BUILD=${BUILD:-9}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS CHANGES LICENSE README*"
 

@@ -30,11 +30,11 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=vnstat
 VERSION=2.8
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 SOURCE="http://humdi.net/vnstat/vnstat-${VERSION}.tar.gz"
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CHANGES COPYING FAQ INSTALL* README UPGRADE examples/vnstat*"
 

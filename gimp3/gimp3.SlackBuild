@@ -35,10 +35,10 @@ PKGNAM=gimp3
 SRCVERSION=2.99.6
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-4}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING* HACKING INSTALL LICENSE NEWS README* docs/Wilber* "
 

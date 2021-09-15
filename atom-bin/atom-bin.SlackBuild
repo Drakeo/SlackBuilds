@@ -34,11 +34,11 @@ PRGNAM=atom
 PKGNAM=atom-bin
 VERSION=1.58.0
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
 DELETE_CACHE=${DELETE_CACHE:-yes}
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in

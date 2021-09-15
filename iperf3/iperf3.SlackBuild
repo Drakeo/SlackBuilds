@@ -31,10 +31,10 @@ PRGNAM=iperf
 PKGNAM=iperf3
 VERSION=3.10.1
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="INSTALL LICENSE README* RELEASE_NOTES"
 

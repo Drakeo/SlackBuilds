@@ -34,10 +34,10 @@ PKGNAM=luminance-hdr
 SRCVERSION=v.2.6.0
 VERSION=2.6.0
 BUILD=${BUILD:-4}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS BUGS INSTALL LICENSE README* TODO"
 

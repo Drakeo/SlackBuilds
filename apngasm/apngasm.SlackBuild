@@ -33,10 +33,10 @@ PKGNAM=apngasm
 SRCVERSION=de1c87cd7696384be3235eb07766766891474e09
 VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.txt *.md"
 

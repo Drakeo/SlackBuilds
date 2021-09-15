@@ -30,10 +30,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=libmpeg2
 VERSION=0.5.1
 BUILD=${BUILD:-7}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS ChangeLog CodingStyle COPYING INSTALL NEWS README TODO doc/*.txt"
 

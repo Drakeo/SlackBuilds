@@ -34,10 +34,10 @@ SRCVERSION=4.4.1
 MAINVERSION=$(echo $SRCVERSION | cut -d- -f1)
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="ChangeLog INSTALL LICENSE README doc/*.html"
 

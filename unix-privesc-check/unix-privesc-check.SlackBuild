@@ -33,10 +33,10 @@ PKGNAM=unix-privesc-check
 VERSION=2.1_git4239100
 COMMIT=4239100762c287b4bde2cf158f949983ec4bb86d
 BUILD=${BUILD:-6}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="doc/*"
 

@@ -33,10 +33,10 @@ PKGNAM=signon-plugin-oauth2
 COMMIT=d759439066f0a34e5ad352ebab0b3bb2790d429e
 VERSION=0.24_$(echo $COMMIT | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING README*"
 

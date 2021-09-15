@@ -33,10 +33,10 @@ PKGNAM=libvterm
 COMMIT=1aa95e24d8f07a396aa80b7cd52f93e2b5bcca79
 VERSION=$(echo $COMMIT | cut -c -7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in

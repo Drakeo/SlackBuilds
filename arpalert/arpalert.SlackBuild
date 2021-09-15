@@ -36,10 +36,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=arpalert
 VERSION=2.0.12
 BUILD=${BUILD:-4}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CHANGES COPYING README VERSION scripts/contribs scripts/test_scripts"
 

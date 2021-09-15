@@ -32,10 +32,10 @@ PRGNAM=Intel-Linux-Processor-Microcode-Data-Files
 PKGNAM=intel-microcode
 VERSION=20210608
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="license release* *.md"
 

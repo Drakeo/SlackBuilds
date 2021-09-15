@@ -32,10 +32,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=vde2
 VERSION=2.3.2
 BUILD=${BUILD:-9}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING README* doc/README* doc/*HOWTO doc/bochs"
 

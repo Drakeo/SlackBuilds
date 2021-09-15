@@ -33,10 +33,10 @@ PKGNAM=nomacs
 VERSION=3.17.2206
 PLUGINVERSION=3.16
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="Readme/COPYRIGHT Readme/LICENSE* Readme/README*"
 

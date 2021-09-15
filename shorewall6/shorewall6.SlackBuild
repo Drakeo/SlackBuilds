@@ -33,10 +33,10 @@ PKGNAM=shorewall6
 VERSION=5.2.8
 BUILD=${BUILD:-2}
 ARCH=noarch
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING INSTALL *.txt Samples6 tunnel ipsecvpn"
 

@@ -33,11 +33,11 @@ PRGNAM=youtube_dl
 PKGNAM=youtube-dl
 VERSION=2021.6.6
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="README* LICENSE AUTHORS *.plugin.zsh docs/*.md"
 

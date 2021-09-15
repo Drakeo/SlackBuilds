@@ -34,10 +34,10 @@ PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
 SRCVERSION=rel_3.0.8
 VERSION=$(echo $SRCVERSION | sed 's/rel_//')
 BUILD=${BUILD:-4}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING *GPL* README*"
 

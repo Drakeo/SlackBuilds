@@ -32,10 +32,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=gtk-vnc
 VERSION=1.2.0
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING* ChangeLog INSTALL NEWS README*"
 

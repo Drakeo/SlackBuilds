@@ -33,10 +33,10 @@ PRGNAM=AFL
 PKGNAM=afl
 VERSION=2.57b
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="llvm_mode/README.llvm LICENSE *.md"
 

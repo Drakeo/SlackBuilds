@@ -33,10 +33,10 @@ PRGNAM=zuluCrypt
 PKGNAM=zulucrypt
 VERSION=5.7.1
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="BUILD_INSTRUCTIONS COPYING GPL* LICENSE README* TODO changelog"
 

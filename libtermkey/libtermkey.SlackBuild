@@ -33,10 +33,10 @@ PKGNAM=libtermkey
 COMMIT=b7fe3af141c53cce71a244282b69ea860452120a
 VERSION=$(echo $COMMIT | cut -c -7)_git
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in

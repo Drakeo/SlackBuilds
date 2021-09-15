@@ -31,10 +31,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=libde265
 VERSION=1.0.8
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING ChangeLog NEWS README*"
 

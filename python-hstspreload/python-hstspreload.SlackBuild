@@ -33,10 +33,10 @@ PRGNAM=hstspreload
 PKGNAM=python-$(echo $PRGNAM | tr A-Z a-z)
 VERSION=2021.9.1
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="LICENSE *.md *.rst"
 

@@ -33,10 +33,10 @@ PKGNAM=signon-ui
 COMMIT=4368bb77d9d1abc2978af514225ba4a42c29a646
 VERSION=0.17_$(echo $COMMIT | head -c8)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING INSTALL NOTES README TODO"
 

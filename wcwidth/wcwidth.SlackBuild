@@ -32,10 +32,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=wcwidth
 VERSION=0.2.5
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.txt *.rst"
 

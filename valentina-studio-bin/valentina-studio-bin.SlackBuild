@@ -34,10 +34,10 @@ PKGNAM=valentina-studio-bin
 VERSION=11.4.5
 MAJVER=$(echo $VERSION | cut -d. -f1)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in

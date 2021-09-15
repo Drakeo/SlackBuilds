@@ -31,10 +31,10 @@ PRGNAM=oauth
 PKGNAM=php-$PRGNAM
 VERSION=2.0.7
 BUILD=${BUILD:-11}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="LICENSE"
 

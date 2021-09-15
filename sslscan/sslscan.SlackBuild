@@ -31,10 +31,10 @@ PKGNAM=sslscan
 SRCVERSION=2.0.10
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="Changelog LICENSE README* TODO"
 

@@ -31,10 +31,10 @@ PKGNAM=netsniff-ng
 COMMIT=0.6.8
 VERSION=$(echo $COMMIT | tr - _)
 BUILD=${BUILD:-3}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING Cmds CodingStyle Config Extra INSTALL README REPORTING-BUGS SubmittingPatches"
 

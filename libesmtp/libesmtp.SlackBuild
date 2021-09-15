@@ -31,10 +31,10 @@ PRGNAM=libESMTP
 PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
 VERSION=1.1.0
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING* LICENSE *.md docs/*.md"
 

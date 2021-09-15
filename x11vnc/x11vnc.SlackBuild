@@ -32,10 +32,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=x11vnc
 VERSION=0.9.16
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING ChangeLog INSTALL NEWS README* TODO"
 

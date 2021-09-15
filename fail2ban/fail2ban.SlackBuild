@@ -34,10 +34,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=fail2ban
 VERSION=0.11.2
 BUILD=${BUILD:-3}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CONTRIBUTING* COPYING ChangeLog DEVELOP FILTERS MANIFEST README.md RELEASE THANKS TODO doc/run-rootless.txt files"
 

@@ -31,10 +31,10 @@ PKGNAM=gimp-script-fu
 VERSION=51
 SRCVERSION=2.10
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 ARCH=noarch
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what

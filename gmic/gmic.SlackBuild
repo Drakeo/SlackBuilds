@@ -33,10 +33,10 @@ PKGNAM=gmic
 SRCVERSION=2.9.9
 VERSION=$SRCVERSION
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 # Plugins: none, gimp, krita, digikam
 # I don't activate digikam because it gives an error in cmake check

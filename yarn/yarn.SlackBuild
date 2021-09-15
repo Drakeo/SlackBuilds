@@ -33,10 +33,10 @@ PRGNAM=yarn
 PKGNAM=$(echo $PRGNAM | tr - _)
 VERSION=1.22.11
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="dist/LICENSE dist/README*"
 

@@ -34,10 +34,10 @@ PKGNAM=go-$(echo $PRGNAM | tr A-Z a-z)
 SRCVERSION=2ec189313ef0a07735684caebd1ba8b8ebca456f
 VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="LICENSE *.md"
 

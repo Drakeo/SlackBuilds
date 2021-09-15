@@ -32,10 +32,10 @@ PKGNAM=libcurl-gnutls
 PRGNAM=curl
 VERSION=7.78.0 # This is the version in Slackware current
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING* README*"
 

@@ -33,10 +33,10 @@ PKGNAM=cld2
 SRCVERSION=b56fa78a2fe44ac2851bae5bf4f4693a0644da7b
 VERSION=20150820_git
 BUILD=${BUILD:-3}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="LICENSE README* docs/*"
 

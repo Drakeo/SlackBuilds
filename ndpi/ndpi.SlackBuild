@@ -34,10 +34,10 @@ PKGNAM=$(echo $PRGNAM | tr A-Z a-z)
 SRCVERSION=90c6fd99a78e3b87d5f1bc61943cf9affc4bb924
 VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING INSTALL *.md README*"
 

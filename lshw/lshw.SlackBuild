@@ -30,10 +30,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=lshw
 VERSION=B.02.19.2
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="docs/* COPYING README"
 

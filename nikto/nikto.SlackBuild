@@ -34,10 +34,10 @@ COMMIT="f6d99d0f3c78a270bb63da2836d8d498b41c6b31"
 SRCVERSION=$COMMIT
 VERSION=$(echo $COMMIT | head -c7)_git
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING *.md program/docs/*.txt program/docs/*.html"
 

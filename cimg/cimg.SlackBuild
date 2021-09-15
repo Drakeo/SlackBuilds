@@ -32,10 +32,10 @@ PKGNAM=cimg
 VERSION=2.9.9
 ARCH=noarch
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CHANGES.txt Licence* README.txt examples"
 

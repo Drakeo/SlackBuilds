@@ -33,10 +33,10 @@ PRGNAM=IO-Tty
 PKGNAM=perl-io-tty
 VERSION=1.16
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 MP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="ChangeLog MANIFEST README*"
 

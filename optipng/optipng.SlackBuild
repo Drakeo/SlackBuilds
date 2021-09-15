@@ -32,10 +32,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=optipng
 VERSION=0.7.7
 BUILD=${BUILD:-3}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.txt doc/*"
 

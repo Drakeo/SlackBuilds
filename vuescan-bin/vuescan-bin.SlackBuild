@@ -33,10 +33,10 @@ PKGNAM=$(echo $PRGNAM | tr A-Z a-z)-bin
 SRCVERSION=97
 VERSION=9.7.65
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in

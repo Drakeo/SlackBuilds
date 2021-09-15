@@ -34,10 +34,10 @@ PKGNAM=php-$(echo $PRGNAM | tr A-Z a-z)
 SRCVERSION=eff23e7ce505920856290d80801f89519883c584
 VERSION=$(echo $SRCVERSION | head -c7)
 BUILD=${BUILD:-11}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.md"
 

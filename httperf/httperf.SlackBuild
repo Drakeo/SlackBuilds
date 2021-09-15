@@ -33,10 +33,10 @@ PKGNAM=httperf
 COMMIT=de8cd6ad8a79779a0cb74a4aa2175afa9e24df57
 VERSION=$(echo $COMMIT | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYRIGHT ChangeLog NEWS README* TODO"
 

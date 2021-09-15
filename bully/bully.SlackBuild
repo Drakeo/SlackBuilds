@@ -32,10 +32,10 @@ PKGNAM=bully
 COMMIT=3ab3bc830738f447dce112e8551e3ac8193bf521
 VERSION=$(echo $COMMIT | head -c7)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.md"
 

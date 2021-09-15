@@ -34,10 +34,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 PKGNAM=redis
 VERSION=6.2.5
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="00-RELEASENOTES BUGS CONTRIBUTING COPYING MANIFESTO README"
 

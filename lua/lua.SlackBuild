@@ -33,10 +33,10 @@ PKGVERSION=$(echo $SRCVERSION | tr - _)
 VERSION=$(echo $SRCVERSION | cut -d- -f1)
 MAINVERSION=$(echo $VERSION | cut -d. -f-2)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="README doc/*"
 

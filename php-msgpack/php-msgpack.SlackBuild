@@ -34,10 +34,10 @@ PKGNAM=php-$PRGNAM
 VERSION=2.1.2
 VERSION=$(echo $VERSION | tr - _)
 BUILD=${BUILD:-10}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="CREDITS ChangeLog EXPERIMENTAL LICENSE README*"
 

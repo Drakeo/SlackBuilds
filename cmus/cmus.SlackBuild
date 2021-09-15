@@ -31,10 +31,10 @@ PKGNAM=cmus
 SRCVERSION=2.9.1
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING README*"
 

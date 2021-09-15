@@ -33,10 +33,10 @@ PRGNAM=separate+
 PKGNAM=gimp-$(echo $PRGNAM | tr A-Z a-z)
 VERSION=0.5.8
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING* README* *.txt"
 

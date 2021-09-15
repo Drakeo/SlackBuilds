@@ -33,10 +33,10 @@ PKGNAM=gdata-python-client
 COMMIT=3541dfa420b9095ffcfb28c59994b65dfe465ffd
 VERSION=$(echo $COMMIT | cut -c -7)_git
 BUILD=${BUILD:-8}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="*.txt"
 

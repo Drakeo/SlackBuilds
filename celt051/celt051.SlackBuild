@@ -33,10 +33,10 @@ PRGNAM=celt
 PKGNAM=celt051
 VERSION=0.5.1.3
 BUILD=${BUILD:-3}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPY* ChangeLog INSTALL NEWS README* TODO"
 

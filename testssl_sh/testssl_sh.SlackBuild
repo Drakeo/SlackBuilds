@@ -33,10 +33,10 @@ PRGNAM=testssl.sh
 PKGNAM=testssl_sh
 VERSION=3.0.5
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 ARCH=noarch
 
 DOCFILES="CHANGELOG* CREDITS* LICENSE README* doc/*.md"

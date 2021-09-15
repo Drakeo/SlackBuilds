@@ -33,10 +33,10 @@ PRGNAM=ok.sh
 PKGNAM=ok_sh
 VERSION=0.7.0
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 ARCH=noarch
 DOCFILES="LICENSE README* tests"
 

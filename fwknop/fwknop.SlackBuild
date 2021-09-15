@@ -33,10 +33,10 @@ PKGNAM=fwknop
 SRCVERSION=2.6.11-pre1
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING CREDITS ChangeLog* INSTALL NEWS README VERSION"
 

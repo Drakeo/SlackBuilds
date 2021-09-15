@@ -33,10 +33,10 @@ PRGNAM=ctags
 PKGNAM=universal-ctags
 VERSION=p5.9.20210314.0
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="COPYING README* docs/*.rst"
 

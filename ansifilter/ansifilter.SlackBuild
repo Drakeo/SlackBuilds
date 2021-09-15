@@ -28,7 +28,7 @@ set -e
 PRGNAM=ansifilter
 VERSION=2.18
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in
@@ -41,7 +41,7 @@ fi
 cd $(dirname $0) ; CWD=$(pwd)
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information

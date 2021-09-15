@@ -33,10 +33,10 @@ PKGNAM=bashdb
 SRCVERSION=5.0-1.1.2
 VERSION=$(echo $SRCVERSION | tr - _)
 BUILD=${BUILD:-1}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="AUTHORS COPYING ChangeLog* INSTALL NEWS README* THANKS TODO"
 

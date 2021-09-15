@@ -33,10 +33,10 @@ PKGNAM=hping
 VERSION=3.0.0_git
 COMMIT="3547c7691742c6eaa31f8402e0ccbb81387c1b99"
 BUILD=${BUILD:-13}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="docs/*-* docs/*.txt docs/hping2rc.example"
 

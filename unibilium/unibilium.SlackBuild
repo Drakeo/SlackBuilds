@@ -33,10 +33,10 @@ PKGNAM=unibilium
 SRCVERSION=92d929fabaf94ea4feb48149bbc3bbea77c4fab0
 VERSION=$(echo $SRCVERSION | cut -c-7)
 BUILD=${BUILD:-2}
-TAG=${TAG:-cf}
+TAG=${TAG:-_drakeo}
 TMP=${TMP:-/tmp/pkg}
 PKG=$TMP/package-$PKGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp/pkg/pkgs}
 
 DOCFILES="Changes *GPL* LICENSE README"
 
